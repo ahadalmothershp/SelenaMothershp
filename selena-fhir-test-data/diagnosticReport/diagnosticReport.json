@@ -1,0 +1,4358 @@
+{
+  "resourceType": "Bundle",
+  "type": "searchset",
+  "total": 39,
+  "link": [
+    {
+      "relation": "self",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=e63wRTbPfr1p8UW81d8Seiw3"
+    }
+  ],
+  "entry": [
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eyFD0OoLIh16gxL7l96VWhA3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eyFD0OoLIh16gxL7l96VWhA3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eyFD0OoLIh16gxL7l96VWhA3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795509"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/ehkL5VLMm8g2jW0dAjtC1KNflXZfQaXYLdOcZQ9Y-uNA3",
+            "display": "POCT CBC"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "POCT"
+              }
+            ],
+            "text": "Point of Care Testing"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "85027",
+              "display": "CHG COMPLETE CBC"
+            }
+          ],
+          "text": "POCT CBC"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/e2leg.rUL2MEDCdsnXsPWRA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1855"
+          },
+          "display": "Orders Only"
+        },
+        "effectiveDateTime": "2012-10-27T18:45:00Z",
+        "issued": "2012-10-27T18:45:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbYWDrkY7w2oFGOx9lOF7Qfv3",
+            "display": "Component (1): HCT, POC"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbYzZdZnSPtyFuCYWobwwWoI3",
+            "display": "Component (1): HGB, POC"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbaDWzRimQsMVWUZolcIAJNv3",
+            "display": "Component (1): RBC, POC"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbYWQEBEqBsxT0nw2UbcGkHZ3",
+            "display": "Component (1): WBC, POC"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbbNYwE5uLg7J018pvaEkQZA3",
+            "display": "Component (1): MCV, POC"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbaUQ.qChF2eY8krN0bakkXT3",
+            "display": "Component (1): MCH, POC"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbZtwH2ZucKSRLKCA8yU6onW3",
+            "display": "Component (1): MCHC, POC"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbb3XwEj5QVj4HItt14Mcc0Q3",
+            "display": "Component (1): RDW, POC"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGic-HkErsZI2nYaeCzyybsDPmfmVvqQDbXEBTXUZUtI9a3",
+            "display": "Component (1): POC PLATELET COUNT"
+          },
+          {
+            "reference": "Observation/e6iFdm3mEXa58gc3cWeqGie3Wtbxwl8k64iNCgo0ufbaUWo0TTosf1vZ4Dxz7Jdpz3",
+            "display": "Component (1): MPV, POC"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/elnJ8HqkFXEpgU4fl-UKNFA3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/elnJ8HqkFXEpgU4fl-UKNFA3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "elnJ8HqkFXEpgU4fl-UKNFA3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795514"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eShEyDAxK2uRsn.9Q4UCL01SOsInJTbC5f.sMxAa2zb43",
+            "display": "POCT CBC"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "POCT"
+              }
+            ],
+            "text": "Point of Care Testing"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "85027",
+              "display": "CHG COMPLETE CBC"
+            }
+          ],
+          "text": "POCT CBC"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/enMFrpFJ7aR3xxkgkWR3v4w3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1856"
+          },
+          "display": "Orders Only"
+        },
+        "effectiveDateTime": "2012-10-19T21:26:00Z",
+        "issued": "2012-10-19T21:26:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPUMugLIOh3p.l.12P5rRs1gEST3qVg1DwJBYKc3ra3mU3",
+            "display": "Component (1): HEMATOCRIT (%) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPUMugLIOh3p.l.12P5rRs1hRaq7VacqI0s5Y7ImYloUW3",
+            "display": "Component (1): HEMOGLOBIN (G/DL) IN BLOOD"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPUVsBil6EaYfqb9XaHvBLmSc0ifKgr-XxahVo5SDuKGj3",
+            "display": "Component (1): ERYTHROCYTES (10*6/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPUVsBil6EaYfqb9XaHvBLmS3qwNmbDK2CIZBsmO8agQZ3",
+            "display": "Component (1): LEUKOCYTES(10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPdo4ES-o1WYnzJBFxaOfq7bWm93P5BbdsTi6S-ABWbOk3",
+            "display": "Component (1): MCV, POC"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPdo4ES-o1WYnzJBFxaOfq7afAL8eOO9642PiBu1WusIq3",
+            "display": "Component (1): MCH, POC"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPdo4ES-o1WYnzJBFxaOfq7aVOsDRoO7mmCuOyPVBvn-43",
+            "display": "Component (1): MCHC, POC"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPdo4ES-o1WYnzJBFxaOfq7ay48H1KA.UlbZfFZSKuczK3",
+            "display": "Component (1): RDW, POC"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPUVsBil6EaYfqb9XaHvBLmSTnQCXJ8KDGNR9CsccGIeV3",
+            "display": "Component (1): PLATELETS (10*3/UL) IN BLOOD AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/eFiAvoi-2ww0zCTbyUrPEPdo4ES-o1WYnzJBFxaOfq7a26344P04VpSmdWUrkNCJu3",
+            "display": "Component (1): MPV, POC"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eEOq6BTl3t1Xod4tlOb5Sng3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eEOq6BTl3t1Xod4tlOb5Sng3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eEOq6BTl3t1Xod4tlOb5Sng3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795517"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Immunization"
+              }
+            ],
+            "text": "Immunization/Injection"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "90655",
+              "display": "FLU VACCINE, 6-35 MO, IM, PRESERV FREE"
+            }
+          ],
+          "text": "FLU VACCINE 6-35MO PRESERVATIVE FREE IM"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/ebxvM3lGd503DIAQma30uzg3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1882"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2010-04-21T05:00:00Z",
+        "issued": "2010-04-21T05:00:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/epF6XfByhlyzBciUDENvbvw3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/epF6XfByhlyzBciUDENvbvw3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "epF6XfByhlyzBciUDENvbvw3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795518"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/ee8nhn2R6ZD3GNme2mOPAIxPYKkr11VEGDF.sfw5gOtw3",
+            "display": "CBC"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "85027",
+              "display": "CHG COMPLETE CBC"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.96",
+              "code": "26604007",
+              "display": "CBC"
+            }
+          ],
+          "text": "CBC"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/elHE3YMvKatcodBm-NGF3BA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1884"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2010-02-20T17:34:00Z",
+        "issued": "2010-02-20T17:34:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e6t7PqavRtHnfbzZoj4mldxdXIUNQqLkCdrXvLwCWF0L6MAyeNK6NJGPWekdPW3tA3",
+            "display": "Component (1): HEMOGLOBIN BLOOD GAS"
+          },
+          {
+            "reference": "Observation/e6t7PqavRtHnfbzZoj4mldxdXIUNQqLkCdrXvLwCWF0IZJDGgCDgwhoriG909zj1K3",
+            "display": "Component (1): HEMATOCRIT (%) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/epilKse1PSpQkDukpP3mWMkLUxsMAvu6xb3gQDRYI2f03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/epilKse1PSpQkDukpP3mWMkLUxsMAvu6xb3gQDRYI2f03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/epilKse1PSpQkDukpP3mWMkLUxsMAvu6xb3gQDRYI2f03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e6t7PqavRtHnfbzZoj4mld2edsN0Mnrlqnqx7w1cBt0z6J6V8asPJ5IXow5WeDwIK3",
+            "display": "Component (1): NEUTROPHILS (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/e6t7PqavRtHnfbzZoj4mldxdXIUNQqLkCdrXvLwCWF0J7mLM8RM5bxZoP8fIm0E6K3",
+            "display": "Component (1): LYMPHOCYTES (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/e6t7PqavRtHnfbzZoj4mldxdXIUNQqLkCdrXvLwCWF0IkBolnEfmUijiHIIg15TJB3",
+            "display": "Component (1): MONOCYTES (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/e6t7PqavRtHnfbzZoj4mldxdXIUNQqLkCdrXvLwCWF0KCpuNhUlxs8xETMEKTc1r93",
+            "display": "Component (1): EOSINOPHILS (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/e6t7PqavRtHnfbzZoj4mld04v0djTQzCMwcrieqrluNqUbCAtqy8LG.wqCXC3FxTm3",
+            "display": "Component (1): PLATELETS (10*3/UL) IN BLOOD AUTOMATED COUNT"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e2.Ztgjq0ffonJ9IhBc1cIQ3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e2.Ztgjq0ffonJ9IhBc1cIQ3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "e2.Ztgjq0ffonJ9IhBc1cIQ3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795519"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eIQySvOnzSYw9MTCTyy2hfhDithtAn8qMSI-ygOWWOWI3",
+            "display": "TSH"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84443",
+              "display": "CHG ASSAY THYROID STIM HORMONE"
+            }
+          ],
+          "text": "TSH"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/elHE3YMvKatcodBm-NGF3BA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1884"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2010-02-20T17:34:00Z",
+        "issued": "2010-02-20T17:34:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eT7CDlSP1a-jPnc0V8djcsgvgInkKvFfs.48RAVYVfQc3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e8GvKDQv56kTeODwY3lyj4A3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e8GvKDQv56kTeODwY3lyj4A3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "e8GvKDQv56kTeODwY3lyj4A3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795520"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eN792gk8xSqmFJniUX6WMlyQt8Mb4YRu.M.QKfbgHwgQ3",
+            "display": "ELECTROLYTE PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80051",
+              "display": "CHG ELECTROLYTE PANEL"
+            }
+          ],
+          "text": "ELECTROLYTE PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/elHE3YMvKatcodBm-NGF3BA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1884"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2010-02-20T17:36:00Z",
+        "issued": "2010-02-20T17:36:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eliN4lgbTzcxBvpYTeKJmVqUPo4BM4wv.2z9Y2dLKJ7M3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eliN4lgbTzcxBvpYTeKJmVqUPo4BM4wv.2z9Y2dLKJ7M3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eliN4lgbTzcxBvpYTeKJmVqUPo4BM4wv.2z9Y2dLKJ7M3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eliN4lgbTzcxBvpYTeKJmVqUPo4BM4wv.2z9Y2dLKJ7M3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eliN4lgbTzcxBvpYTeKJmVqUPo4BM4wv.2z9Y2dLKJ7M3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eliN4lgbTzcxBvpYTeKJmVqUPo4BM4wv.2z9Y2dLKJ7M3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/euCEN-31Y2h5EQD0cXgJATA3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/euCEN-31Y2h5EQD0cXgJATA3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "euCEN-31Y2h5EQD0cXgJATA3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795521"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eSwzJsQIanctj4K3NwA--ACh9GEVAVTyND1881xd.OLg3",
+            "display": "LIPID PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80061",
+              "display": "CHG LIPID PANEL"
+            }
+          ],
+          "text": "LIPID PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/elHE3YMvKatcodBm-NGF3BA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1884"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2010-02-20T17:36:00Z",
+        "issued": "2010-02-20T17:36:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e82VVYS6suakKRKQN5hX1tyMKoy0C5tH7uEil1ZyFbMk3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e82VVYS6suakKRKQN5hX1tyMKoy0C5tH7uEil1ZyFbMk3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eSKrnIAIiuI-NmU7hxcpZBDDRoOdgOAdyBe64bfPgyWkG9e9BqsWK803zS9IAV8tF3",
+            "display": "Component (1): TRIGLYCERIDE (MG/DL) IN SER/PLAS"
+          },
+          {
+            "reference": "Observation/e82VVYS6suakKRKQN5hX1tyMKoy0C5tH7uEil1ZyFbMk3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eqM6447SE1XDADtfwqyva.Q3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eqM6447SE1XDADtfwqyva.Q3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eqM6447SE1XDADtfwqyva.Q3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795526"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/esX-LDt8-Fht6E6QSKdVtqPxpbms7LCMoOEQpzsOo.Vg3",
+            "display": "LIPID PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80061",
+              "display": "CHG LIPID PANEL"
+            }
+          ],
+          "text": "LIPID PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eBideOPkqG9JgdMTltxpY9w3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1891"
+          },
+          "display": "Orders Only"
+        },
+        "effectiveDateTime": "2009-06-06T16:23:00Z",
+        "issued": "2009-06-06T16:23:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e17fB6de8EerSw6YYCn0JH4O19H0g7tBMW9X7meB91cQ3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e17fB6de8EerSw6YYCn0JH4O19H0g7tBMW9X7meB91cQ3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e17fB6de8EerSw6YYCn0JH4O19H0g7tBMW9X7meB91cQ3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e17fB6de8EerSw6YYCn0JH4O19H0g7tBMW9X7meB91cQ3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eI-OooprOKUWSt9KUAgyieA3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eI-OooprOKUWSt9KUAgyieA3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eI-OooprOKUWSt9KUAgyieA3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795527"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/ePr4CelI3oh0BkL2209MjEWYII-6IaXNd.iMacWaSI7o3",
+            "display": "AST"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84450",
+              "display": "TRANSFERASE ASPARTATE AMINO (AST) (SGOT)"
+            }
+          ],
+          "text": "AST"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eBideOPkqG9JgdMTltxpY9w3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1891"
+          },
+          "display": "Orders Only"
+        },
+        "effectiveDateTime": "2009-06-06T16:21:00Z",
+        "issued": "2009-06-06T16:21:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/ePiJb9A2tWoQalHvP5zoFn4L6086qQn0wFedjuZn4eGk3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e.Po75jhWjrC40V7O1fDh8Q3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e.Po75jhWjrC40V7O1fDh8Q3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "e.Po75jhWjrC40V7O1fDh8Q3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795529"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Immunization"
+              }
+            ],
+            "text": "Immunization/Injection"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "90655",
+              "display": "FLU VACCINE, 6-35 MO, IM, PRESERV FREE"
+            }
+          ],
+          "text": "FLU VACCINE 6-35MO PRESERVATIVE FREE IM"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/euzjqOT2KMiOZ6N2ryrUDgA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1895"
+          },
+          "display": "Orders Only"
+        },
+        "effectiveDateTime": "2009-04-13T16:15:00Z",
+        "issued": "2009-04-13T16:15:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/emd4lv5icti4SQ523r1y-8w3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/emd4lv5icti4SQ523r1y-8w3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "emd4lv5icti4SQ523r1y-8w3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795530"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/e5yN4mcg7LTllslw8nwuBqvyluoElfmL2aJAb5NETiHw3",
+            "display": "CBC"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "85027",
+              "display": "CHG COMPLETE CBC"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.96",
+              "code": "26604007",
+              "display": "CBC"
+            }
+          ],
+          "text": "CBC"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eI5p3dq.z0IrvdwUYV9FETg3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1898"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2009-03-18T15:49:00Z",
+        "issued": "2009-03-18T15:49:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e28zjG1oDsW0DVDrvc0.uLOgjRE4BRwBA950WuH13QFFZlWyiz9TZjXW4OlXbhh7-3",
+            "display": "Component (1): HEMOGLOBIN BLOOD GAS"
+          },
+          {
+            "reference": "Observation/e28zjG1oDsW0DVDrvc0.uLOgjRE4BRwBA950WuH13QFEGITVtmQrYwrBwdq4w3eUQ3",
+            "display": "Component (1): HEMATOCRIT (%) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/efJwBhUsF9VYPOE9ICI18iCnPDfHkONgBmsuIwReXzz83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/efJwBhUsF9VYPOE9ICI18iCnPDfHkONgBmsuIwReXzz83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/efJwBhUsF9VYPOE9ICI18iCnPDfHkONgBmsuIwReXzz83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e28zjG1oDsW0DVDrvc0.uLNVN4cVG.izeZKICDzJ813WmRofKT37mr5-jm5UmMDlR3",
+            "display": "Component (1): NEUTROPHILS (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/e28zjG1oDsW0DVDrvc0.uLOgjRE4BRwBA950WuH13QFE8jY.J2AyhsUP9VbqknjOq3",
+            "display": "Component (1): LYMPHOCYTES (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/efJwBhUsF9VYPOE9ICI18iCnPDfHkONgBmsuIwReXzz83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/efJwBhUsF9VYPOE9ICI18iCnPDfHkONgBmsuIwReXzz83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e28zjG1oDsW0DVDrvc0.uLIbgFH-dnPUJyeGF9QKj0AdtYd-wJzSmy5ia2bXmGr0r3",
+            "display": "Component (1): PLATELETS (10*3/UL) IN BLOOD AUTOMATED COUNT"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eoMRTyLjllcC3wLKphW3lHw3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eoMRTyLjllcC3wLKphW3lHw3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eoMRTyLjllcC3wLKphW3lHw3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795531"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/e55PqJoLgQy-A6ye3SXAQgGPyU42e3DXTKPRuNofaqL43",
+            "display": "LIPID PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80061",
+              "display": "CHG LIPID PANEL"
+            }
+          ],
+          "text": "LIPID PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eI5p3dq.z0IrvdwUYV9FETg3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1898"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2009-03-18T15:50:00Z",
+        "issued": "2009-03-18T15:50:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e-EasHg8j7E9V7bJMh8j6YXjfgDafWfrYi7F-pcn5xbg3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e-EasHg8j7E9V7bJMh8j6YXjfgDafWfrYi7F-pcn5xbg3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/elj3O-k3QU80nseBud298EThNoidPdUF1vm.HC8ZQWMm8KsWFpes0b3vKw-JtAHMz3",
+            "display": "Component (1): TRIGLYCERIDE (MG/DL) IN SER/PLAS"
+          },
+          {
+            "reference": "Observation/e-EasHg8j7E9V7bJMh8j6YXjfgDafWfrYi7F-pcn5xbg3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eogv8atqaXnApjVLxdxEmUw3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eogv8atqaXnApjVLxdxEmUw3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eogv8atqaXnApjVLxdxEmUw3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795532"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/ei88Xe2WJUfmDOlVQ3d9iqObdeCQuRKdVhs9rQkJCjzs3",
+            "display": "ELECTROLYTE PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80051",
+              "display": "CHG ELECTROLYTE PANEL"
+            }
+          ],
+          "text": "ELECTROLYTE PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eI5p3dq.z0IrvdwUYV9FETg3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1898"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2009-03-18T15:51:00Z",
+        "issued": "2009-03-18T15:51:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e21zl4.5yYPQYsyqFlXEMdIXVeCIHEr8FwoU5kvbAHFc3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e21zl4.5yYPQYsyqFlXEMdIXVeCIHEr8FwoU5kvbAHFc3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e21zl4.5yYPQYsyqFlXEMdIXVeCIHEr8FwoU5kvbAHFc3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e21zl4.5yYPQYsyqFlXEMdIXVeCIHEr8FwoU5kvbAHFc3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e21zl4.5yYPQYsyqFlXEMdIXVeCIHEr8FwoU5kvbAHFc3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e21zl4.5yYPQYsyqFlXEMdIXVeCIHEr8FwoU5kvbAHFc3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e48smVsMqhd8swpxsr9Qgtw3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e48smVsMqhd8swpxsr9Qgtw3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "e48smVsMqhd8swpxsr9Qgtw3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795533"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eOaiRIG5mVw.uyDSYsXD6vAB1vvZgQ4mus4llofhzo3U3",
+            "display": "TSH"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84443",
+              "display": "CHG ASSAY THYROID STIM HORMONE"
+            }
+          ],
+          "text": "TSH"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eI5p3dq.z0IrvdwUYV9FETg3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1898"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2009-03-18T15:44:00Z",
+        "issued": "2009-03-18T15:44:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eSeVjjmvm21wh-Ovl.ASh1e43sax3LeFL3CVBMJK0I0Q3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/epd0anY9KKY3EJtUIDEQHQQ3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/epd0anY9KKY3EJtUIDEQHQQ3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "epd0anY9KKY3EJtUIDEQHQQ3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795541"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eHLEHmzcZb3QM-TQ0xbcgZ5vEozF1HNqlKTts4sHUKOY3",
+            "display": "CBC"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "85027",
+              "display": "CHG COMPLETE CBC"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.96",
+              "code": "26604007",
+              "display": "CBC"
+            }
+          ],
+          "text": "CBC"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eAcQfzyN6KiGobapHW.ClIQ3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1900"
+          },
+          "display": "Hospital Encounter"
+        },
+        "effectiveDateTime": "2009-03-12T12:45:00Z",
+        "issued": "2009-03-12T12:45:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/e8bM9BibcJ25SLe6lJi5i9Q3",
+            "type": "Practitioner",
+            "display": "Attending Physician Emergency, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/erFp-CA.wP4DjlHdbLh-FNuGxEP6m0g0vtn-bM7w87bw8iK3vNwZmb655OdxORs273",
+            "display": "Component (1): HEMOGLOBIN (G/DL) IN BLOOD"
+          },
+          {
+            "reference": "Observation/erFp-CA.wP4DjlHdbLh-FNuGxEP6m0g0vtn-bM7w87byqSezbh34sACL-EPyg5prU3",
+            "display": "Component (1): HEMATOCRIT (%) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/euAkdywSl4-Np.O3rVmRTJQoTo5fXGO3TdMqQGq6ZKr03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/erFp-CA.wP4DjlHdbLh-FNtYgXVB9wzKZ3fymhCW2qADpLJX1VsNoUXdVEE789utd3",
+            "display": "Component (1): LEUKOCYTES(10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/erFp-CA.wP4DjlHdbLh-FNtYgXVB9wzKZ3fymhCW2qAB0N64tOXklPmjWUDgOr6Xv3",
+            "display": "Component (1): ERYTHROCYTE MEAN CORPUSCULAR VOLUME (FL) BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/euAkdywSl4-Np.O3rVmRTJQoTo5fXGO3TdMqQGq6ZKr03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/erFp-CA.wP4DjlHdbLh-FNiOnEEYyJKUZfYHgunb3Hf.Z5oTnobVKEunUQPKw1X1e3",
+            "display": "Component (1): NEUTROPHILS (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/erFp-CA.wP4DjlHdbLh-FNuGxEP6m0g0vtn-bM7w87by8nhovKMFmWktQVKQHneq63",
+            "display": "Component (1): LYMPHOCYTES (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/erFp-CA.wP4DjlHdbLh-FNuGxEP6m0g0vtn-bM7w87bwIMtd0lL-APH4HGoymXkmz3",
+            "display": "Component (1): MONOCYTES (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/erFp-CA.wP4DjlHdbLh-FNuGxEP6m0g0vtn-bM7w87bwCTIGgG0uSdP7N4s5P5eSU3",
+            "display": "Component (1): EOSINOPHILS (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eMP5DrVHTRT7DTDEHlI.yPA3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eMP5DrVHTRT7DTDEHlI.yPA3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eMP5DrVHTRT7DTDEHlI.yPA3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795542"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/e-luZ9O1Gf35SvuEhfOzygEMkxzM6R-9rAV9xKJbG5K43",
+            "display": "BASIC METABOLIC PANEL"
+          }
+        ],
+        "status": "amended",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80048",
+              "display": "CHG BASIC METABOLIC PANEL CALCIUM TOTAL"
+            }
+          ],
+          "text": "BASIC METABOLIC PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eAcQfzyN6KiGobapHW.ClIQ3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1900"
+          },
+          "display": "Hospital Encounter"
+        },
+        "effectiveDateTime": "2009-03-12T12:41:00Z",
+        "issued": "2009-03-12T12:41:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/e8bM9BibcJ25SLe6lJi5i9Q3",
+            "type": "Practitioner",
+            "display": "Attending Physician Emergency, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eO4FS7vir72pB2fElETvlyCvZoRj2OWDpHruj3KclNuI3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eO4FS7vir72pB2fElETvlyCvZoRj2OWDpHruj3KclNuI3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eO4FS7vir72pB2fElETvlyCvZoRj2OWDpHruj3KclNuI3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eO4FS7vir72pB2fElETvlyCvZoRj2OWDpHruj3KclNuI3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eO4FS7vir72pB2fElETvlyCvZoRj2OWDpHruj3KclNuI3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eO4FS7vir72pB2fElETvlyCvZoRj2OWDpHruj3KclNuI3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eO4FS7vir72pB2fElETvlyCvZoRj2OWDpHruj3KclNuI3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eO4FS7vir72pB2fElETvlyCvZoRj2OWDpHruj3KclNuI3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eblihu4x1UR1wPYtCVdVXMg3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eblihu4x1UR1wPYtCVdVXMg3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eblihu4x1UR1wPYtCVdVXMg3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795601"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/en0.5vniujTraafy8KM6Gzlw3DQU.iPnW7tgLuQ2WIlM3",
+            "display": "CBC"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "85027",
+              "display": "CBC"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.96",
+              "code": "26604007",
+              "display": "CBC"
+            }
+          ],
+          "text": "CBC"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eCsBB3ppjoyuqIUDxSFWU9Q3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1918"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2007-07-25T15:49:00Z",
+        "issued": "2007-07-25T15:49:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/epWq7BZucXM.CIIR6X4UG5--GgQ-C6i7ZMv9dh.1x7QpKko70dZzhtR4ZlBcrHVEw3",
+            "display": "Component (1): HEMOGLOBIN BLOOD GAS"
+          },
+          {
+            "reference": "Observation/epWq7BZucXM.CIIR6X4UG5--GgQ-C6i7ZMv9dh.1x7QoIt9J9UJtI19TJNaqiU2eE3",
+            "display": "Component (1): HEMATOCRIT (%) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/eI6gSyisn.z9FhY87Uj1XhN3-MbRcO9gBKwDofHmt6s03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eI6gSyisn.z9FhY87Uj1XhN3-MbRcO9gBKwDofHmt6s03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eI6gSyisn.z9FhY87Uj1XhN3-MbRcO9gBKwDofHmt6s03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/epWq7BZucXM.CIIR6X4UG53ccL6F.keWkuVktIm6ipSXo3v9u-VgUS.LeXi12lj2j3",
+            "display": "Component (1): NEUTROPHILS (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/eI6gSyisn.z9FhY87Uj1XhN3-MbRcO9gBKwDofHmt6s03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eI6gSyisn.z9FhY87Uj1XhN3-MbRcO9gBKwDofHmt6s03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eI6gSyisn.z9FhY87Uj1XhN3-MbRcO9gBKwDofHmt6s03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/epWq7BZucXM.CIIR6X4UG53ASaFufhnpQdtQIgDIhxuC5S2PiUJXXSVBhAg1ud8i13",
+            "display": "Component (1): PLATELETS (10*3/UL) IN BLOOD AUTOMATED COUNT"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e6CoSV9IgJoGcfUU1-ygMwA3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e6CoSV9IgJoGcfUU1-ygMwA3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "e6CoSV9IgJoGcfUU1-ygMwA3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795602"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eawn.vy5H.65M0fLWpOZBo72mgXhQKxasP3tjEQgHwwg3",
+            "display": "TSH"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84443",
+              "display": "TSH"
+            }
+          ],
+          "text": "TSH"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eCsBB3ppjoyuqIUDxSFWU9Q3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1918"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2007-07-25T15:50:00Z",
+        "issued": "2007-07-25T15:50:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eG3QwVfro7zo8F6KuNW1hPPr7Up9IdayMy-Oh-HN1XHE3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/euqzQoQOcNWrL87szMBC.rw3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/euqzQoQOcNWrL87szMBC.rw3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "euqzQoQOcNWrL87szMBC.rw3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795603"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/e1D4DcebllCnyLuccctZY3or8kgXeNPrK4vGmlKjTO.o3",
+            "display": "ELECTROLYTE PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80051",
+              "display": "ELECTROLYTE PANEL"
+            }
+          ],
+          "text": "ELECTROLYTE PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eCsBB3ppjoyuqIUDxSFWU9Q3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1918"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2007-07-25T15:53:00Z",
+        "issued": "2007-07-25T15:53:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eMIUG8iOD.awT7OgtSnLJKQsZHuUECIOXdkPYtJOPlMA3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eMIUG8iOD.awT7OgtSnLJKQsZHuUECIOXdkPYtJOPlMA3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eMIUG8iOD.awT7OgtSnLJKQsZHuUECIOXdkPYtJOPlMA3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eMIUG8iOD.awT7OgtSnLJKQsZHuUECIOXdkPYtJOPlMA3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eMIUG8iOD.awT7OgtSnLJKQsZHuUECIOXdkPYtJOPlMA3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eMIUG8iOD.awT7OgtSnLJKQsZHuUECIOXdkPYtJOPlMA3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eFCI0CDmwkjYEBBI-lQH44g3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eFCI0CDmwkjYEBBI-lQH44g3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eFCI0CDmwkjYEBBI-lQH44g3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795604"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/ermm7ZOBehleRDn2AmdtIbWXgRCfabQJtr2X3JIDQLtA3",
+            "display": "AST"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84450",
+              "display": "AST"
+            }
+          ],
+          "text": "AST"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eCsBB3ppjoyuqIUDxSFWU9Q3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1918"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2007-07-25T15:54:00Z",
+        "issued": "2007-07-25T15:54:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e-P1M1JFw1XCH0eeypPLhDalIswhmyG1cpXEsYGrmVwg3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/edbtDRRxwzpPf4nBO9FryEg3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/edbtDRRxwzpPf4nBO9FryEg3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "edbtDRRxwzpPf4nBO9FryEg3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795605"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/e9sgxNIIVjysHwvd3dcY-etfE.pDi5OzYHrYXDaZAZ2A3",
+            "display": "URINALYSIS"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "81003",
+              "display": "URINALYSIS AUTO ONLY"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.96",
+              "code": "27171005",
+              "display": "URINALYSIS"
+            }
+          ],
+          "text": "URINALYSIS"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eCsBB3ppjoyuqIUDxSFWU9Q3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1918"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2007-07-25T15:57:00Z",
+        "issued": "2007-07-25T15:57:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eINVbrw2rkpUJpicS7NR0XOGc53cXoxCZE40qAHr4fY43",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eINVbrw2rkpUJpicS7NR0XOGc53cXoxCZE40qAHr4fY43",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/exolKaXDDq0Clinw0KQA9uaA9JY5PdZ7EpOpV2vIRlr-C6ZvSti7zAH6qUxF85Qjd3",
+            "display": "Component (1): MUCUS"
+          },
+          {
+            "reference": "Observation/exolKaXDDq0Clinw0KQA9uaA9JY5PdZ7EpOpV2vIRlr8-QnwCskq238h8asWXQghc3",
+            "display": "Component (1): WBC (LEUKOCYTE) (#/HPF) IN URINE SEDIMENT"
+          },
+          {
+            "reference": "Observation/exolKaXDDq0Clinw0KQA9uaA9JY5PdZ7EpOpV2vIRlr-VSU-AgNx1rLzLl-yHgdsL3",
+            "display": "Component (1): RBC (#/HPF) IN URINE SEDIMENT"
+          },
+          {
+            "reference": "Observation/exolKaXDDq0Clinw0KQA9uRw4dF2qpET8eTYfXlUIuMwPIgUsCJnNq1WFRfl.ua5m3",
+            "display": "Component (1): GLUCOSE (MG/DL) IN URINE"
+          },
+          {
+            "reference": "Observation/exolKaXDDq0Clinw0KQA9uc34Uuyd6hJBBNf1NujPTUvGiRyrakEg82yftNLu34h43",
+            "display": "Component (1): PROTEIN 24 HOUR VOLUME"
+          },
+          {
+            "reference": "Observation/exolKaXDDq0Clinw0KQA9uaA9JY5PdZ7EpOpV2vIRlr8GYrN12PfvJaMfBsGIWhdS3",
+            "display": "Component (1): BACTERIA (#/HPF) IN URINE"
+          },
+          {
+            "reference": "Observation/exolKaXDDq0Clinw0KQA9uaA9JY5PdZ7EpOpV2vIRlr-TzARf1Vd-4U6r8ILb9yKu3",
+            "display": "Component (1): SQUAMOUS EPITHELIAL CELLS (#/HPF) IN URINE SEDIMENT"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e0qkMjYvAW5a2W-ZHsriaNw3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e0qkMjYvAW5a2W-ZHsriaNw3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "e0qkMjYvAW5a2W-ZHsriaNw3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795606"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eR-xwXy7zhMOZKEvugRiRYAcUn4ItGS5mMqUyfUf7Os83",
+            "display": "LIPID PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80061",
+              "display": "LIPID PANEL"
+            }
+          ],
+          "text": "LIPID PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eCsBB3ppjoyuqIUDxSFWU9Q3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1918"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2007-07-25T15:58:00Z",
+        "issued": "2007-07-25T15:58:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eE7CQyUPF12CwgutwfoIGZi182BgjB3gDqI..aRv2JQw3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eE7CQyUPF12CwgutwfoIGZi182BgjB3gDqI..aRv2JQw3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e.m2.Ff8kJsvIdTUvt.p1m8GerUdfX9yo5hWg5ddDX6hdEcn6XXLSLfUwZhJVByTM3",
+            "display": "Component (1): TRIGLYCERIDE (MG/DL) IN SER/PLAS"
+          },
+          {
+            "reference": "Observation/eE7CQyUPF12CwgutwfoIGZi182BgjB3gDqI..aRv2JQw3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e9hc8tHO7xryVinOShZpH2Q3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/e9hc8tHO7xryVinOShZpH2Q3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "e9hc8tHO7xryVinOShZpH2Q3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795607"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/efi6CPX2-FtPdumeCdfdT8ZKOP8SxIeT6e1ClSwL0cXc3",
+            "display": "POCT URINALYSIS DIPSTICK"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "POCT"
+              }
+            ],
+            "text": "Point of Care Testing"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "81005",
+              "display": "CHG URINALYSIS"
+            }
+          ],
+          "text": "POCT URINALYSIS DIPSTICK"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eCsBB3ppjoyuqIUDxSFWU9Q3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1918"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2007-07-25T15:43:00Z",
+        "issued": "2007-07-25T15:43:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eDP66PD7uBUHjuSNGOjqax6vh.etNRcCHlzugEK3zyPjZQrAnRmhSuU5W5f3rT1.n3",
+            "display": "Component (1): GLUCOSE (MG/DL) IN URINE"
+          },
+          {
+            "reference": "Observation/ep5e7UvvbGpv3q0rvI1vGzg6cMU.uG8LEVJtp5ChMNRs3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eLd06r6l8eyS6GxsD3j4S9A3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eLd06r6l8eyS6GxsD3j4S9A3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eLd06r6l8eyS6GxsD3j4S9A3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795611"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eVWPAC2j7RMoevAO2UmPgx2Lxo5PmYHF5ZTy9QVcqDsA3",
+            "display": "TSH"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84443",
+              "display": "TSH"
+            }
+          ],
+          "text": "TSH"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/ej9Bxnhg7I0P.YV9IwvuwhA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1924"
+          },
+          "display": "Orders Only"
+        },
+        "effectiveDateTime": "2007-01-30T15:45:00Z",
+        "issued": "2007-01-30T15:45:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/emyCZmLJQwy16ROFch0DzLS1PwfKbe0jJZv29Xzq-rKE3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eFFXa1tIWY8ZRYnCThkgN4Q3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eFFXa1tIWY8ZRYnCThkgN4Q3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eFFXa1tIWY8ZRYnCThkgN4Q3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795621"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eBw17EBe5xdbegZ5IAza45.hro.3m-08GpuPd0sk.yd83",
+            "display": "TSH"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84443",
+              "display": "TSH"
+            }
+          ],
+          "text": "TSH"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eB8c8FjZf.pdrhAw0blWHag3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1928"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-10-22T05:00:00Z",
+        "issued": "2006-10-22T05:00:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eAkMsKwOWtFxAYoNH9e-6lA6KcelP8DdqyMfUDw3HUaE3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ewJBpWLNTMy4Wj9l30a1ZBg3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ewJBpWLNTMy4Wj9l30a1ZBg3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "ewJBpWLNTMy4Wj9l30a1ZBg3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795622"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eNQ.pXqnN8BeiJg.0qill9qFhsLiV2YKXQQsC1eObEH03",
+            "display": "ELECTROLYTE PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80051",
+              "display": "ELECTROLYTE PANEL"
+            }
+          ],
+          "text": "ELECTROLYTE PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eB8c8FjZf.pdrhAw0blWHag3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1928"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-10-22T05:00:00Z",
+        "issued": "2006-10-22T05:00:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/euhnvr0DT3raO.R1raoxlMCOBOfy3cr.QQ3rosKCCHRQ3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/euhnvr0DT3raO.R1raoxlMCOBOfy3cr.QQ3rosKCCHRQ3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/euhnvr0DT3raO.R1raoxlMCOBOfy3cr.QQ3rosKCCHRQ3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/euhnvr0DT3raO.R1raoxlMCOBOfy3cr.QQ3rosKCCHRQ3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/euhnvr0DT3raO.R1raoxlMCOBOfy3cr.QQ3rosKCCHRQ3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/euhnvr0DT3raO.R1raoxlMCOBOfy3cr.QQ3rosKCCHRQ3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ehhgGBatT0C.geHn7b9JuNQ3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ehhgGBatT0C.geHn7b9JuNQ3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "ehhgGBatT0C.geHn7b9JuNQ3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795627"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "PR Charge"
+              }
+            ],
+            "text": "PR Charge"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "45330",
+              "display": "PR SIGMOIDOSCOPY,DIAGNOSTIC"
+            }
+          ],
+          "text": "PR SIGMOIDOSCOPY,DIAGNOSTIC"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/eKm9vF9ZjAi3QxFnd3Mwrxw3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1935"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-17T05:00:00Z",
+        "issued": "2006-07-17T05:00:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e9BU9QaolTKYbso0H5PieS5ERAkofKIxmACjjUmNtGcw3",
+            "display": "Narrative"
+          },
+          {
+            "reference": "Observation/e9BU9QaolTKYbso0H5PieS4qflU2EEwWtKCfdzsJhF5o3",
+            "display": "Impression"
+          }
+        ],
+        "presentedForm": [
+          {
+            "contentType": "text/html",
+            "url": "Binary/eub4rseJBuiB-EqpW3evJn-HDCeBU0uZibNP7e3UZrkw3",
+            "title": "Narrative"
+          },
+          {
+            "contentType": "text/html",
+            "url": "Binary/eub4rseJBuiB-EqpW3evJn1KdExZ1eXHhBfJyp8Z835s3",
+            "title": "Impression"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/evVNa9Bfzt8VKX5mrVDtuqg3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/evVNa9Bfzt8VKX5mrVDtuqg3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "evVNa9Bfzt8VKX5mrVDtuqg3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795630"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eESneZItQJmvbdpSTWL3foNyqX6DhTlAitAaohcZFIPU3",
+            "display": "AST"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84450",
+              "display": "AST"
+            }
+          ],
+          "text": "AST"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:34:00Z",
+        "issued": "2006-07-07T14:34:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/ecGXjzbwYZwiKX.ujeYpdaqH6cFNofnAm5n-cPq4jsQI3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eiWHejmADNVxUnWABHDh83w3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eiWHejmADNVxUnWABHDh83w3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eiWHejmADNVxUnWABHDh83w3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795631"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eyfprX2X3S2.cFgML8e-z5LnIq.YSvHnRX6UN.iBiYxA3",
+            "display": "LIPID PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80061",
+              "display": "LIPID PANEL"
+            }
+          ],
+          "text": "LIPID PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:35:00Z",
+        "issued": "2006-07-07T14:35:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eZgwVfoztdYobPe4xS9thPBz2QDPnlKnOT-F7vfr7h0o3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eZgwVfoztdYobPe4xS9thPBz2QDPnlKnOT-F7vfr7h0o3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eZgwVfoztdYobPe4xS9thPBz2QDPnlKnOT-F7vfr7h0o3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eZgwVfoztdYobPe4xS9thPBz2QDPnlKnOT-F7vfr7h0o3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/epHK4.Qh0QxYR0fzijdfu2A3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/epHK4.Qh0QxYR0fzijdfu2A3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "epHK4.Qh0QxYR0fzijdfu2A3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795632"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eaIF1Qg8KvmN4XLscV0uB8F9PkjP5Vcvt8NXjgpy1XuU3",
+            "display": "CBC"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "85027",
+              "display": "CBC"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.96",
+              "code": "26604007",
+              "display": "CBC"
+            }
+          ],
+          "text": "CBC"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:43:00Z",
+        "issued": "2006-07-07T14:43:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e8HysXvcAyHJ9p3m-n6.KdYE.x-SKrGcPtCaI.4q27SahEsp9GKWfMPbbZLnzjEY13",
+            "display": "Component (1): HEMOGLOBIN BLOOD GAS"
+          },
+          {
+            "reference": "Observation/e8HysXvcAyHJ9p3m-n6.KdYE.x-SKrGcPtCaI.4q27SZ9cKOlMqfK2ehIPX0K619U3",
+            "display": "Component (1): HEMATOCRIT (%) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/eW84m1igDAugTifYeTf6TIHwaMvVejbouH3.FGwW1hI83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eW84m1igDAugTifYeTf6TIHwaMvVejbouH3.FGwW1hI83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eW84m1igDAugTifYeTf6TIHwaMvVejbouH3.FGwW1hI83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e8HysXvcAyHJ9p3m-n6.KdTT9TdIhFTeRZmieJtV98dg-ub-tcLiX2J2CAHEVXryN3",
+            "display": "Component (1): NEUTROPHILS (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/e8HysXvcAyHJ9p3m-n6.KdYE.x-SKrGcPtCaI.4q27SbyXDbsJz6tbn1ZZmD-DeMI3",
+            "display": "Component (1): LYMPHOCYTES (10*3/UL) IN BLOOD BY AUTOMATED COUNT"
+          },
+          {
+            "reference": "Observation/eW84m1igDAugTifYeTf6TIHwaMvVejbouH3.FGwW1hI83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eW84m1igDAugTifYeTf6TIHwaMvVejbouH3.FGwW1hI83",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e8HysXvcAyHJ9p3m-n6.KdQN9dT5AAZc7Gl52KkLgZ3eGrNaaAf5OB4CKm13evbJy3",
+            "display": "Component (1): PLATELETS (10*3/UL) IN BLOOD AUTOMATED COUNT"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ewkUnbvNCEMHmTvQopikeEQ3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ewkUnbvNCEMHmTvQopikeEQ3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "ewkUnbvNCEMHmTvQopikeEQ3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795633"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/elKqYsbraNTDxSpmnao5w41xogQnOP79SRgkNajkKJ1k3",
+            "display": "URINALYSIS"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "81003",
+              "display": "URINALYSIS AUTO ONLY"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.96",
+              "code": "27171005",
+              "display": "URINALYSIS"
+            }
+          ],
+          "text": "URINALYSIS"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:46:00Z",
+        "issued": "2006-07-07T14:46:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eoJkgIRySGS89RUOnUoH6O4556L0BGuXqmz-Z-Y9MrMo3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eoJkgIRySGS89RUOnUoH6O4556L0BGuXqmz-Z-Y9MrMo3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eJYcb8pho4mBOC2hzoXvLJl-9ni5miYSJUxBBXmMfyClFjKBkQlrl9aKu4fSWXN1A3",
+            "display": "Component (1): MUCUS"
+          },
+          {
+            "reference": "Observation/eJYcb8pho4mBOC2hzoXvLJl-9ni5miYSJUxBBXmMfyCmft0Zj23bHcv90p0MB8ewb3",
+            "display": "Component (1): WBC (LEUKOCYTE) (#/HPF) IN URINE SEDIMENT"
+          },
+          {
+            "reference": "Observation/eJYcb8pho4mBOC2hzoXvLJl-9ni5miYSJUxBBXmMfyCkrOom.sNuv5u-t3UpDKcIg3",
+            "display": "Component (1): RBC (#/HPF) IN URINE SEDIMENT"
+          },
+          {
+            "reference": "Observation/eoJkgIRySGS89RUOnUoH6O4556L0BGuXqmz-Z-Y9MrMo3",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/eJYcb8pho4mBOC2hzoXvLJtybs3LKdIVCksx5faVUH-0reY2xGAA30EEcyaQIuGje3",
+            "display": "Component (1): PROTEIN 24 HOUR VOLUME"
+          },
+          {
+            "reference": "Observation/eJYcb8pho4mBOC2hzoXvLJl-9ni5miYSJUxBBXmMfyClT9LDiAepOBw5RHfmhCkXe3",
+            "display": "Component (1): BACTERIA (#/HPF) IN URINE"
+          },
+          {
+            "reference": "Observation/eJYcb8pho4mBOC2hzoXvLJl-9ni5miYSJUxBBXmMfyCk7-f.GkJQTYD3G6HmtFCX93",
+            "display": "Component (1): SQUAMOUS EPITHELIAL CELLS (#/HPF) IN URINE SEDIMENT"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eZM52llxx8Mquih8JMtNAfA3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eZM52llxx8Mquih8JMtNAfA3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eZM52llxx8Mquih8JMtNAfA3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795634"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eqDBRwjTI.oVjykZOb4JWbG53I-5JWqWzWUYbk6OLVPc3",
+            "display": "TSH"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "84443",
+              "display": "TSH"
+            }
+          ],
+          "text": "TSH"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:47:00Z",
+        "issued": "2006-07-07T14:47:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/ewR.qHZO3a1xA4UOpQTvpvHrgUW5wSnFNonowcLuc80w3",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ecUtMEMzAm0XpAvPSphGExg3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ecUtMEMzAm0XpAvPSphGExg3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "ecUtMEMzAm0XpAvPSphGExg3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795635"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/eKXGuvy6U-SN5NEhxTXDFxmdVwXGF3UWcCUeMpZ7Iwvw3",
+            "display": "ELECTROLYTE PANEL"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "80051",
+              "display": "ELECTROLYTE PANEL"
+            }
+          ],
+          "text": "ELECTROLYTE PANEL"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:49:00Z",
+        "issued": "2006-07-07T14:49:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e2.ZWNTlqQ37BGBz7Uczu-NL7MM8OTwGBK-pEPQuJld03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e2.ZWNTlqQ37BGBz7Uczu-NL7MM8OTwGBK-pEPQuJld03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e2.ZWNTlqQ37BGBz7Uczu-NL7MM8OTwGBK-pEPQuJld03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e2.ZWNTlqQ37BGBz7Uczu-NL7MM8OTwGBK-pEPQuJld03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e2.ZWNTlqQ37BGBz7Uczu-NL7MM8OTwGBK-pEPQuJld03",
+            "display": "Component"
+          },
+          {
+            "reference": "Observation/e2.ZWNTlqQ37BGBz7Uczu-NL7MM8OTwGBK-pEPQuJld03",
+            "display": "Component"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ehNw1kbJ-pHHqHznbi4og6A3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ehNw1kbJ-pHHqHznbi4og6A3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "ehNw1kbJ-pHHqHznbi4og6A3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795636"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/e6uwykHSK2FtJSeEPDhBKDXQHIaYrYKt4RLYRBD2ATxQ3",
+            "display": "HEMOGLOBIN A1C"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Lab"
+              }
+            ],
+            "text": "Lab"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "LAB",
+                "display": "Laboratory"
+              }
+            ],
+            "text": "Laboratory"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "83036",
+              "display": "HEMOGLOBIN A1C"
+            },
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.96",
+              "code": "43396009",
+              "display": "HEMOGLOBIN A1C"
+            }
+          ],
+          "text": "HEMOGLOBIN A1C"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:50:00Z",
+        "issued": "2006-07-07T14:50:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/e3DAYS9X7ARb5EiOPf2Bg0CL0M15zCXlBq0i0ZDC4g6jXKrREusar6YCUV0yAhbT.3",
+            "display": "Component (1): HEMOGLOBIN A1C/HEMOGLOBIN TOTAL IN BLOOD"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eNw6sTXG0Yz8NCd9zAGKDhQ3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eNw6sTXG0Yz8NCd9zAGKDhQ3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eNw6sTXG0Yz8NCd9zAGKDhQ3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795637"
+          }
+        ],
+        "basedOn": [
+          {
+            "reference": "ServiceRequest/egawnU4pAiC2qLKbh2sMOYywnyLT6ZPKXIkgQfjyKt9Q3",
+            "display": "XR CHEST PA OR AP"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Imaging"
+              }
+            ],
+            "text": "Imaging"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "LP29684-5",
+                "display": "Radiology"
+              }
+            ],
+            "text": "Radiology"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.696580",
+              "code": "33476"
+            }
+          ],
+          "text": "XR CHEST PA OR AP"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:32:00Z",
+        "issued": "2006-07-07T14:32:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eM.oO32CvcNNYYJW0qAbQTrpzU.CttbsbX1bGZJa9bOs3",
+            "display": "Narrative"
+          },
+          {
+            "reference": "Observation/eM.oO32CvcNNYYJW0qAbQTt5GndyJcqMg0ZUlb28VVcY3",
+            "display": "Impression"
+          }
+        ],
+        "imagingStudy": [
+          {
+            "reference": "ImagingStudy/ev39vL5TdgAAsW1li1.TJ4g3"
+          }
+        ],
+        "conclusionCode": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "235595009",
+                "display": "Gastroesophageal reflux disease (disorder)"
+              },
+              {
+                "system": "http://hl7.org/fhir/sid/icd-9-cm",
+                "code": "530.81",
+                "display": "Esophageal reflux"
+              },
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10-cm",
+                "code": "K21.9",
+                "display": "Gastro-esophageal reflux disease without esophagitis"
+              }
+            ],
+            "text": "Gerd (Gastroesophageal Reflux Disease)"
+          }
+        ],
+        "presentedForm": [
+          {
+            "contentType": "text/html",
+            "url": "Binary/ecc8GGI7vzftrfIrvuNa2hO0c6StxGlmfH.hX2kg59hk3",
+            "title": "Narrative"
+          },
+          {
+            "contentType": "text/html",
+            "url": "Binary/ecc8GGI7vzftrfIrvuNa2hF4i2Yju1ixb5uq4xlPEnMk3",
+            "title": "Impression"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eVSNtvBNeHrYsZVr9KRVcvQ3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eVSNtvBNeHrYsZVr9KRVcvQ3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eVSNtvBNeHrYsZVr9KRVcvQ3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795638"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "PR Charge"
+              }
+            ],
+            "text": "PR Charge"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "93000",
+              "display": "PR ELECTROCARDIOGRAM, COMPLETE"
+            }
+          ],
+          "text": "PR ELECTROCARDIOGRAM, COMPLETE"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:33:00Z",
+        "issued": "2006-07-07T14:33:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/eRJ26Sy48MtDBEAax78XSBMh.X8KOGT5hz2CyStA4OvI3",
+            "display": "Narrative"
+          },
+          {
+            "reference": "Observation/eRJ26Sy48MtDBEAax78XSBAzUoYZx00xaI3Pg-WG8YCw3",
+            "display": "Impression"
+          }
+        ],
+        "presentedForm": [
+          {
+            "contentType": "text/html",
+            "url": "Binary/eqEUbuRr35AhMK0f3CmlPWaEj0wN7XTv2rNPoFqoVMTQ3",
+            "title": "Narrative"
+          },
+          {
+            "contentType": "text/html",
+            "url": "Binary/eqEUbuRr35AhMK0f3CmlPWeZAZGjjFg5kr1HhlscDySI3",
+            "title": "Impression"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eLnb5j5YmhDkBo7UyBCBXeA3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eLnb5j5YmhDkBo7UyBCBXeA3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eLnb5j5YmhDkBo7UyBCBXeA3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795639"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Immunization"
+              }
+            ],
+            "text": "Immunization/Injection"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "90714",
+              "display": "PR TD VACCINE NO PRSRV >/= 7 YO, IM"
+            }
+          ],
+          "text": "TD VACCINE PRESERVATIVE FREE"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T05:00:00Z",
+        "issued": "2006-07-07T05:00:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ebBwW5J-4jFIuWnNATNybAw3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/ebBwW5J-4jFIuWnNATNybAw3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "ebBwW5J-4jFIuWnNATNybAw3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795640"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Immunization"
+              }
+            ],
+            "text": "Immunization/Injection"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:2.16.840.1.113883.6.12",
+              "code": "90655",
+              "display": "PR FLU VACCINE, 6-35 MO, IM"
+            }
+          ],
+          "text": "FLU VACCINE 6-35MO PRESERVATIVE FREE IM"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T05:00:00Z",
+        "issued": "2006-07-07T05:00:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "link": [
+        {
+          "relation": "self",
+          "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eWc4WkE-rvEk.lA.awB05Fg3"
+        }
+      ],
+      "fullUrl": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport/eWc4WkE-rvEk.lA.awB05Fg3",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "eWc4WkE-rvEk.lA.awB05Fg3",
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PLAC",
+                  "display": "Placer Identifier"
+                }
+              ],
+              "text": "Placer Identifier"
+            },
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.798268",
+            "value": "795641"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "urn:oid:1.2.840.114350.1.13.0.1.7.10.798268.30",
+                "code": "Nursing"
+              }
+            ],
+            "text": "Nursing"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "urn:oid:1.2.840.114350.1.13.0.1.7.2.696580",
+              "code": "41601",
+              "display": "TOBACCO CESSATION EDUCATION"
+            }
+          ],
+          "text": "SMOKING CESSATION EDUCATION"
+        },
+        "subject": {
+          "reference": "Patient/e63wRTbPfr1p8UW81d8Seiw3",
+          "display": "Mychart, Theodore"
+        },
+        "encounter": {
+          "reference": "Encounter/emP16n.XfvbB598bBSMPWNA3",
+          "identifier": {
+            "use": "usual",
+            "system": "urn:oid:1.2.840.114350.1.13.0.1.7.3.698084.8",
+            "value": "1938"
+          },
+          "display": "Office Visit"
+        },
+        "effectiveDateTime": "2006-07-07T14:50:00Z",
+        "issued": "2006-07-07T14:50:00Z",
+        "performer": [
+          {
+            "reference": "Practitioner/eM5CWtq15N0WJeuCet5bJlQ3",
+            "type": "Practitioner",
+            "display": "Physician Family Medicine, MD"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    }
+  ]
+}

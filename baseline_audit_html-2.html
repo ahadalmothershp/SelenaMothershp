@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Selena — Phase 0 Baseline Audit Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #020817; color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; }
+button, select { cursor: pointer; font-family: inherit; }
+table { border-collapse: collapse; width: 100%; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const { useState, useEffect, useRef } = React;
+
+const rand = (mn, mx, d = 2) => parseFloat((Math.random() * (mx - mn) + mn).toFixed(d));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+// ── UNIT DEFINITIONS FROM process.js ─────────────────────────────────────────
+const UNITS = {
+  mental_health: {
+    label: "Mental Health", color: "#a855f7",
+    dimensions: ["Emotional Stability","Causality Index","Cognitive Coherence","Behavioral Consistency","Social Withdrawal","Somatic Masking","Help-Seeking Signal","Temporal Coherence"],
+    weightType: "qualitative",
+    pairedPatients: [
+      { high: "Marcus Lee", low: "Sarah Chen", baselineOutput: "Moderate depression — recommend outpatient follow-up and medication review.", note: "Same surface presentation: 'moderate depression, sleep disturbance, low mood.' Baseline produced identical output for both. Selena detected masked SI in Marcus (Stability 0.12, Causality 0.91) while confirming genuine stability in Sarah (Stability 0.71, Causality 0.40). Without Selena, Marcus would have been discharged into a crisis." },
+      { high: "James Rivera", low: "Priya Nair", baselineOutput: "Moderate depression with anxiety. Continue current medication. Reassess in 72 hours.", note: "Baseline underestimated severity in James — causality spike (0.83) and stability collapse (0.28) not detected. 72-hour reassessment window too long given deterioration rate. Selena shortened window to immediate and identified comorbid BPD pattern." },
+    ]
+  },
+  icu: {
+    label: "ICU", color: "#ef4444",
+    dimensions: ["Hemo. Stability","Deterioration Velocity","Organ Load","Signal Recency","Physiological Intensity","Symptom Frequency","System Correlation","Vitals Contrast","Assessment Coverage"],
+    weightType: "numeric",
+    pairedPatients: [
+      { high: "Thomas Martinez", low: "Ricardo Vega", baselineOutput: "Vitals within acceptable range. HR 97, BP 114/72, SpO₂ 95%. Continue current ventilator protocol and monitoring.", note: "Identical vitals snapshot produced identical baseline output for both patients. Selena detected hemodynamic collapse in Thomas (Stability 0.11, Velocity 0.89, Organ Load 0.83) — multi-organ dysfunction onset invisible to standard monitoring. Ricardo confirmed stable (Δ=0.78). Standard protocol would have delayed critical intervention." },
+      { high: "Carlos Wu", low: "Linda Brooks", baselineOutput: "Sepsis protocol ongoing. Vitals fluctuating within expected range for Day 6. Continue antibiotics and monitoring.", note: "Baseline missed Day 6 velocity escalation in Carlos (0.78) — treatment resistance pattern not detected. 'Fluctuating within expected range' masked antibiotic efficacy failure. Selena flagged culture sensitivity review." },
+    ]
+  },
+  oncology: {
+    label: "Oncology", color: "#06b6d4",
+    dimensions: ["Pain Gap (Report vs. Behavioral)","Psychosocial Stability","Toxicity Load","Neutropenic Risk Window","Pain Trajectory","Functional Decline Rate","Caregiver Support Index","Treatment Adherence Signal"],
+    weightType: "numeric",
+    pairedPatients: [
+      { high: "David Park", low: "Elena Rossi", baselineOutput: "Patient reports pain 3/10, managing okay. Cycle 3 Day 8 FOLFOX proceeding as expected. Continue current protocol.", note: "Identical self-report '3/10 pain, managing okay' produced identical baseline output. Selena detected Pain Gap 0.87 in David — behavioral markers (sleep disruption, mobility decline) indicated actual pain 7-8/10. Fear of treatment pause was the masking driver. Elena's 3/10 report was verified accurate (Pain Gap 0.22). Same protocol continuation would have left David in severe unmanaged pain." },
+      { high: "George Tanaka", low: "James O'Brien", baselineOutput: "Cycle 4 Day 1. Standard monitoring.", note: "Baseline missed cumulative psychosocial burden in George — Cycle 4 prognosis awareness and goals-of-care burden not flagged. Caregiver Support (0.38) at critical disease stage undetected. Selena prompted palliative team conversation." },
+    ]
+  },
+  cardiology: {
+    label: "Cardiology", color: "#f59e0b",
+    dimensions: ["Symptom Minimization","Arrhythmia Index","Readmission Risk","Adherence Trajectory","Activity Tolerance","Hemodynamic Stability","Psychosocial Burden","Comorbidity Load"],
+    weightType: "numeric",
+    pairedPatients: [
+      { high: "Robert Walsh", low: "Patricia Huang", baselineOutput: "Patient reports feeling well. Vitals stable. Post-stent Day 2 recovery on track. Proceed with standard discharge protocol.", note: "Identical report 'feeling well, vitals stable' produced identical discharge recommendation for both. Selena detected Symptom Minimization 0.84 in Robert — Arrhythmia Index 0.79 predicted acute event within 7-14 days, Activity Tolerance 0.18 collapsed. Discharging Robert would have resulted in $15,000-$25,000 30-day readmission. Patricia confirmed safe to discharge (Δ=0.64)." },
+      { high: "Marcus Thompson", low: "Linda Fernandez", baselineOutput: "Afib patient on anticoagulation. Rhythm fluctuating as expected. Continue monitoring.", note: "Baseline missed anticoagulation non-compliance signal in Marcus — Adherence Trajectory (0.21) indicated behavioral non-compliance, primary stroke risk factor. 'Fluctuating as expected' masked arrhythmia escalation pattern. Selena triggered urgent medication counseling." },
+    ]
+  },
+  emergency: {
+    label: "Emergency", color: "#34d399",
+    dimensions: ["Presentation Contrast","Social Support Stability","Follow-up Probability","Housing Security","Deterioration Speed","Triage Accuracy Signal","Symptom Frequency","Comorbidity Burden"],
+    weightType: "numeric",
+    pairedPatients: [
+      { high: "Kevin Chen", low: "Maria Santos", baselineOutput: "Moderate chest pain presentation. Vitals stable. Workup and monitor per ED protocol.", note: "Identical triage presentation produced identical ED protocol recommendation. Selena detected total social infrastructure collapse in Kevin — Social Support 0.08, Follow-up 0.11, Housing 0.09. Near-zero probability of attending any follow-up care. Standard discharge = patient lost to system permanently. Maria's strong social infrastructure confirmed appropriate for standard protocol (Δ=0.70)." },
+      { high: "Devon Williams", low: "Tom Bradley", baselineOutput: "Moderate abdominal pain. No acute surgical findings on initial exam. Monitor and reassess.", note: "Baseline missed undertriage signal in Devon — Deterioration Speed 0.81 inconsistent with moderate classification. Triage Accuracy Signal (0.21) flagged potential severity underestimation. Selena recommended urgent surgical consult." },
+    ]
+  },
+  pediatrics: {
+    label: "Pediatrics", color: "#ec4899",
+    dimensions: ["Caregiver Reliability","Observed vs. Reported Gap","Developmental Context Delta","Symptom Frequency","Physiological Trajectory","Family Stress Index","Caregiver Anxiety Calibration","Follow-up Reliability"],
+    weightType: "numeric",
+    pairedPatients: [
+      { high: "Noah Reyes", low: "Lily Park", baselineOutput: "Pediatric fever and lethargy. Workup per protocol. Reassess in 4 hours.", note: "Identical caregiver report produced identical protocol recommendation. Selena detected Caregiver Reliability 0.12 in Noah — account internally inconsistent, Observed vs Reported Gap 0.89 indicated child's actual condition significantly worse than reported. Family Stress Index 0.84 flagged potential safeguarding concern. Lily's caregiver verified reliable (0.84). Standard protocol based on Noah's caregiver report was clinically inappropriate." },
+      { high: "Marcus Lee Jr", low: "Sophie Chen", baselineOutput: "Pediatric presentation. Parents distressed. Monitor and reassure.", note: "Baseline missed acute caregiver trauma response in Marcus Jr — Caregiver Anxiety 0.88 at seizure event made account unreliable. At age 3, direct clinical observation is the only valid assessment source. Selena flagged structured follow-up plan requirement given distressed family compliance risk." },
+    ]
+  },
+  orthopedics: {
+    label: "Orthopedics", color: "#60a5fa",
+    dimensions: ["Rehab Compliance Gap","Mobility Progression Index","Pain Consistency","Self-Efficacy Signal","Caregiver Support","Readmission Risk (Surgical)","Medication Adherence","Functional Independence"],
+    weightType: "numeric",
+    pairedPatients: [
+      { high: "Frank Morrison", low: "Grace Liu", baselineOutput: "Post-hip replacement Day 4. Patient reports compliance with rehab. Continue current protocol.", note: "Identical self-report 'compliant with rehab' produced identical protocol continuation for both. Selena detected Rehab Compliance Gap 0.87 in Frank — exercises abandoned 24-48 hours prior, Mobility 64% below Day 4 benchmark. Self-Efficacy collapse (0.18) indicated fear-driven avoidance, not refusal. Joint stiffening window was opening. Grace confirmed genuinely compliant (Mobility 12% ahead of benchmark)." },
+      { high: "Bernard Osei", low: "Helen Marsh", baselineOutput: "Post-knee replacement Day 6. Some pain reported. Encourage continued rehab.", note: "Baseline missed pain barrier driving non-compliance in Bernard — Pain Consistency (0.62) indicated analgesia insufficient for rehab participation. 'Encourage continued rehab' without addressing pain barrier was clinically ineffective. Selena identified pain management adjustment as the intervention, not motivation coaching." },
+    ]
+  }
+};
+
+const UNIT_KEYS = Object.keys(UNITS);
+const RC = { pending: "#f59e0b", approved: "#10b981", flagged: "#ef4444" };
+
+function genRun(i) {
+  const cold = Math.random() > 0.65;
+  const unit = pick(UNIT_KEYS);
+  const unitDef = UNITS[unit];
+  const resources = ["Patient","Encounter","Observation","Location"];
+  const returned = resources.filter(() => Math.random() > 0.15);
+  const missing = resources.filter(r => !returned.includes(r));
+  const retries = Math.floor(rand(0, 4, 0));
+  const failureMode = Math.random() > 0.82
+    ? pick(["token_exchange_timeout","fhir_call_4xx","bedrock_throttle","lambda_timeout","jwks_fetch_fail"])
+    : null;
+
+  const baselineOutputs = {
+    mental_health: "Moderate depression — recommend outpatient follow-up and medication review.",
+    icu: "Vitals within acceptable range. Continue current ventilator protocol and monitoring.",
+    oncology: "Patient reports pain 3/10, managing well. Continue current protocol.",
+    cardiology: "Patient reports feeling well. Vitals stable. Proceed with standard discharge protocol.",
+    emergency: "Moderate presentation. Vitals stable. Workup and monitor per ED protocol.",
+    pediatrics: "Pediatric presentation. Workup per protocol. Reassess in 4 hours.",
+    orthopedics: "Patient reports compliance with rehab. Continue current protocol."
+  };
+
+  const dimensionZeroState = {};
+  unitDef.dimensions.forEach(d => { dimensionZeroState[d] = null; });
+
+  return {
+    runId: "run_" + String(i + 1).padStart(3, "0"),
+    mode: "baseline",
+    timestamp: new Date(Date.now() - (49 - i) * 5500).toISOString(),
+    source: "cloudwatch",
+    unit, unitLabel: unitDef.label,
+    reviewStatus: i < 38 ? "approved" : "pending",
+    reviewedBy: i < 38 ? "william.robinson" : null,
+    baselineOutput: baselineOutputs[unit],
+    ry_score: null,
+    riskClass: null,
+    dimensionScores: dimensionZeroState,
+    environment: {
+      lambdaStartType: cold ? "cold" : "warm",
+      coldStartOverheadMs: cold ? rand(80, 220) : 0,
+      networkLatencyMs: rand(18, 95),
+      epicEndpoint: "sandbox",
+      region: "us-east-1",
+      deploymentVersion: "phase0-v1.2",
+    },
+    fhirContext: {
+      resourcesRequested: resources,
+      resourcesReturned: returned,
+      resourcesMissing: missing,
+      fieldCompleteness: Object.fromEntries(returned.map(r => [r, rand(72, 100)])),
+      totalFieldsExpected: 48,
+      totalFieldsPopulated: Math.floor(rand(32, 48, 0)),
+      bundleSize: Math.floor(rand(4, 18, 0)),
+    },
+    risk: {
+      failureMode, retryCount: retries,
+      retrySucceeded: retries > 0 ? Math.random() > 0.2 : null,
+      lambdaThrottled: Math.random() > 0.92,
+      bedrockThrottled: Math.random() > 0.88,
+      stabilityScore: parseFloat((rand(78, 99) - (retries * 3) - (cold ? 4 : 0)).toFixed(1)),
+      driftFlag: Math.random() > 0.85,
+    },
+    auth: {
+      launchUrlResponseTime: rand(180, 340) + (cold ? rand(40, 100) : 0),
+      tokenExchangeLatency: rand(250, 450) + (cold ? rand(80, 200) : 0),
+      tokenExchangeSuccessRate: rand(97.5, 100),
+      fullAuthCycleTime: rand(900, 1600) + (cold ? rand(80, 200) : 0),
+      jwksAvailability: rand(99.5, 100),
+    },
+    pipeline: {
+      firstFhirReadLatency: rand(320, 560),
+      ingestionSpeed: rand(180, 290),
+      normalization: rand(85, 145),
+      signalTrigger: rand(45, 105),
+      intelObject: rand(100, 180),
+      endToEnd: rand(150, 230) + (cold ? rand(60, 140) : 0),
+    },
+    fhir: { apiStability: rand(98.2, 99.9), fhirReliability: rand(97.8, 99.8), fhirCallVolume: Math.floor(rand(800, 1400, 0)) },
+    bedrock: {
+      apiLatency: rand(280, 520) + (retries * rand(40, 80)),
+      callSuccessRate: rand(97.5, 100),
+      claudeResponseTime: rand(200, 380),
+      tokenUsageInput: Math.floor(rand(600, 1100, 0)),
+      tokenUsageOutput: Math.floor(rand(200, 480, 0)),
+    },
+    errors: Math.floor(rand(0, 8, 0)),
+    successRate: rand(95, 100),
+  };
+}
+
+const initRuns = Array.from({ length: 50 }, (_, i) => genRun(i));
+
+const BADGE = (label, color) =>
+  React.createElement("span", { style: { fontSize: 9, fontWeight: 700, color, background: color + "18", padding: "2px 8px", borderRadius: 20, whiteSpace: "nowrap" } }, label);
+
+function Spark({ data, color, w = 120, h = 32 }) {
+  const clean = data.filter(v => v != null);
+  if (clean.length < 2) return null;
+  const mn = Math.min(...clean), mx = Math.max(...clean), range = mx - mn || 1;
+  const p = 3;
+  const pts = clean.map((v, i) => {
+    const x = p + (i / (clean.length - 1)) * (w - p * 2);
+    const y = h - p - ((v - mn) / range) * (h - p * 2);
+    return x + "," + y;
+  }).join(" ");
+  return React.createElement("svg", { width: w, height: h },
+    React.createElement("polyline", { points: pts, fill: "none", stroke: color, strokeWidth: "1.5", strokeLinejoin: "round" })
+  );
+}
+
+function SHead({ label, color, sub }) {
+  return React.createElement("div", { style: { borderLeft: "3px solid " + color, paddingLeft: 10, marginBottom: 14 } },
+    React.createElement("div", { style: { fontSize: 13, fontWeight: 800, color: "#f1f5f9" } }, label),
+    sub && React.createElement("div", { style: { fontSize: 11, color: "#475569", marginTop: 2 } }, sub)
+  );
+}
+
+function Tile({ label, value, unit = "", color = "#f1f5f9", sub }) {
+  return React.createElement("div", { style: { background: "#0a1628", border: "1px solid #1e293b", borderRadius: 10, padding: "12px 14px" } },
+    React.createElement("div", { style: { fontSize: 10, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em" } }, label),
+    React.createElement("div", { style: { fontSize: 20, fontWeight: 800, color, marginTop: 3 } },
+      value, React.createElement("span", { style: { fontSize: 11, color: "#64748b", marginLeft: 2 } }, unit)
+    ),
+    sub && React.createElement("div", { style: { fontSize: 10, color: "#475569", marginTop: 2 } }, sub)
+  );
+}
+
+// ── CONTEXT EXPLAINER ─────────────────────────────────────────────────────────
+function ContextExplainer() {
+  const [open, setOpen] = useState(false);
+  return React.createElement("div", { style: { background: "#0f172a", border: "1px solid #1e3a5f", borderRadius: 12, overflow: "hidden", marginBottom: 14 } },
+    React.createElement("button", {
+      onClick: () => setOpen(!open),
+      style: { width: "100%", background: "none", border: "none", padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }
+    },
+      React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 10 } },
+        React.createElement("span", { style: { fontSize: 11, fontWeight: 700, color: "#60a5fa", letterSpacing: "0.06em", textTransform: "uppercase" } }, "📖 What Is This Dashboard — Baseline vs Selena Comparison Context"),
+        React.createElement("span", { style: { fontSize: 10, color: "#475569" } }, open ? "" : "Click to expand")
+      ),
+      React.createElement("span", { style: { color: "#475569", fontSize: 14 } }, open ? "▲" : "▼")
+    ),
+    open && React.createElement("div", { style: { borderTop: "1px solid #1e293b", padding: 20 } },
+      // What is Phase 0
+      React.createElement("div", { style: { marginBottom: 20 } },
+        React.createElement("div", { style: { fontSize: 12, fontWeight: 800, color: "#60a5fa", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.06em" } }, "What Phase 0 Is"),
+        React.createElement("div", { style: { fontSize: 12, color: "#94a3b8", lineHeight: 1.7 } },
+          "Phase 0 is the infrastructure and baseline measurement sprint (March 9 – April 8, 2026). The pipeline is: Epic FHIR → AWS Bedrock → Claude. Selena middleware has not been built yet. Every run in this dashboard captures what the pipeline produces without Selena — flat Claude outputs with no dimensional analysis, no R(y) score, and no risk classification. These runs are the ground truth that Phase 1 measures against."
+        )
+      ),
+      // What is the baseline
+      React.createElement("div", { style: { marginBottom: 20, padding: 14, background: "#0a1628", borderRadius: 8, borderLeft: "3px solid #f59e0b" } },
+        React.createElement("div", { style: { fontSize: 12, fontWeight: 800, color: "#f59e0b", marginBottom: 8 } }, "What the Baseline Output Looks Like"),
+        React.createElement("div", { style: { fontSize: 12, color: "#94a3b8", lineHeight: 1.7, marginBottom: 10 } },
+          "Without Selena, Claude receives raw unprocessed FHIR data and produces generic flat text. Examples from the seven clinical units:"
+        ),
+        [
+          { unit: "Mental Health", color: "#a855f7", output: "\"Moderate depression — recommend outpatient follow-up and medication review.\"", problem: "Identical output for Marcus Lee (masked SI, crisis-level) and Sarah Chen (genuinely stable). No differentiation possible." },
+          { unit: "ICU", color: "#ef4444", output: "\"Vitals within acceptable range. HR 97, BP 114/72, SpO₂ 95%. Continue current ventilator protocol and monitoring.\"", problem: "Identical output for Thomas Martinez (hemodynamic collapse, multi-organ dysfunction) and Ricardo Vega (stable recovery). Standard monitoring would miss Thomas until acute decompensation." },
+          { unit: "Cardiology", color: "#f59e0b", output: "\"Patient reports feeling well. Vitals stable. Proceed with standard discharge protocol.\"", problem: "Identical discharge recommendation for Robert Walsh (Readmission Risk 0.88, 7-14 day acute event window) and Patricia Huang (safe to discharge). Est. $15,000-$25,000 readmission cost." },
+          { unit: "Emergency", color: "#34d399", output: "\"Moderate chest pain presentation. Vitals stable. Workup and monitor per ED protocol.\"", problem: "Identical ED protocol for Kevin Chen (Social Support 0.08, Follow-up 0.11, Housing 0.09 — last-contact risk) and Maria Santos (strong social infrastructure). Kevin would be lost to system after discharge." },
+        ].map((item, idx) =>
+          React.createElement("div", { key: idx, style: { marginBottom: 10, padding: "10px 12px", background: "#0f172a", borderRadius: 6, borderLeft: "3px solid " + item.color } },
+            React.createElement("div", { style: { fontSize: 10, color: item.color, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 } }, item.unit),
+            React.createElement("div", { style: { fontSize: 11, color: "#60a5fa", fontStyle: "italic", marginBottom: 6 } }, item.output),
+            React.createElement("div", { style: { fontSize: 11, color: "#ef4444" } }, "⚠ " + item.problem)
+          )
+        )
+      ),
+      // What Selena adds
+      React.createElement("div", { style: { marginBottom: 20, padding: 14, background: "#0a1628", borderRadius: 8, borderLeft: "3px solid #10b981" } },
+        React.createElement("div", { style: { fontSize: 12, fontWeight: 800, color: "#10b981", marginBottom: 8 } }, "What Selena Adds in Phase 1"),
+        React.createElement("div", { style: { fontSize: 12, color: "#94a3b8", lineHeight: 1.7, marginBottom: 10 } },
+          "Selena is the middleware layer between Epic FHIR and Claude. It receives raw FHIR data, runs dimensional analysis across 8-9 weighted dimensions per clinical unit, produces an R(y) relevance score, assigns a risk classification, and sends a structured intelligence object to Claude instead of raw data. Claude then reasons against a clean, normalized, dimensionally-scored input rather than noisy raw FHIR."
+        ),
+        React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 10 } },
+          [
+            { label: "R(y) Score", desc: "0–1 relevance score per patient per run. NULL in Phase 0. First appears in Phase 1.", color: "#10b981" },
+            { label: "Dimension Scores", desc: "8-9 weighted scores per clinical unit. All NULL in Phase 0. The transition NULL → scored is the proof.", color: "#a78bfa" },
+            { label: "Risk Classification", desc: "high / moderate / low per run. NULL in Phase 0. Phase 1 measures classification accuracy.", color: "#f59e0b" },
+            { label: "Structured Output", desc: "Selena shapes the FHIR data before Claude sees it. Reduces hallucination, improves accuracy.", color: "#60a5fa" },
+          ].map((item, idx) =>
+            React.createElement("div", { key: idx, style: { padding: "10px 12px", background: "#0f172a", borderRadius: 8, borderLeft: "3px solid " + item.color } },
+              React.createElement("div", { style: { fontSize: 11, fontWeight: 700, color: item.color, marginBottom: 4 } }, item.label),
+              React.createElement("div", { style: { fontSize: 11, color: "#475569" } }, item.desc)
+            )
+          )
+        )
+      ),
+      // The comparison
+      React.createElement("div", { style: { marginBottom: 20, padding: 14, background: "#0a1628", borderRadius: 8, borderLeft: "3px solid #a78bfa" } },
+        React.createElement("div", { style: { fontSize: 12, fontWeight: 800, color: "#a78bfa", marginBottom: 8 } }, "How Phase 0 Baseline and Phase 1 Selena Are Compared"),
+        React.createElement("div", { style: { fontSize: 12, color: "#94a3b8", lineHeight: 1.7 } },
+          "Every run is tagged with a mode field: 'baseline' (Phase 0) or 'selena' (Phase 1). The same test inputs — synthetic FHIR patient records — run through both modes. The delta between the two is the evidence. Key comparison points: (1) R(y) NULL → scored, (2) Dimensions NULL → populated, (3) Risk classification absent → accurate differentiation of paired patients, (4) Flat generic output → structured dimensional reasoning. William signs off on Phase 0 baseline runs in S3 before Phase 1 begins. Those signed records become the immutable comparison foundation."
+        )
+      ),
+      // Why this matters
+      React.createElement("div", { style: { padding: 14, background: "#0a1628", borderRadius: 8, borderLeft: "3px solid #ef4444" } },
+        React.createElement("div", { style: { fontSize: 12, fontWeight: 800, color: "#ef4444", marginBottom: 8 } }, "Why the Paired Patient Evidence Matters"),
+        React.createElement("div", { style: { fontSize: 12, color: "#94a3b8", lineHeight: 1.7 } },
+          "The most powerful evidence in this dashboard is the Critical Miss Evidence tab. Across all 7 units, every high-risk patient has a low-risk counterpart with an identical or near-identical surface presentation. The baseline produces the same output for both. Selena must correctly separate each pair in Phase 1 — detecting Marcus Lee's masked SI while confirming Sarah Chen's stability, detecting Thomas Martinez's hemodynamic collapse while confirming Ricardo Vega's recovery. The failure to differentiate is documented here as the Phase 0 ground truth. The ability to differentiate is what Phase 1 must prove."
+        )
+      )
+    )
+  );
+}
+
+// ── UNIT OVERVIEW ─────────────────────────────────────────────────────────────
+function UnitOverview({ runs }) {
+  return React.createElement("div", { style: { background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 16 } },
+    React.createElement(SHead, { label: "Unit Segmentation", color: "#f1f5f9", sub: "Baseline runs aggregated per clinical unit — dimensions are not comparable across units" }),
+    React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 10 } },
+      UNIT_KEYS.map(uk => {
+        const uRuns = runs.filter(r => r.unit === uk);
+        const cold = uRuns.filter(r => r.environment.lambdaStartType === "cold").length;
+        const failures = uRuns.filter(r => r.risk.failureMode).length;
+        const approved = uRuns.filter(r => r.reviewStatus === "approved").length;
+        const u = UNITS[uk];
+        return React.createElement("div", { key: uk, style: { background: "#0a1628", border: "1px solid " + u.color + "22", borderRadius: 10, padding: 12 } },
+          React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 } },
+            React.createElement("span", { style: { fontSize: 12, fontWeight: 700, color: u.color } }, u.label),
+            BADGE(uRuns.length + " runs", u.color)
+          ),
+          React.createElement("div", { style: { fontSize: 11, color: "#475569" } }, "Approved ", React.createElement("b", { style: { color: "#10b981" } }, approved + "/" + uRuns.length)),
+          React.createElement("div", { style: { fontSize: 11, color: "#475569", marginTop: 3 } }, "Cold Starts ", React.createElement("b", { style: { color: "#f59e0b" } }, cold)),
+          React.createElement("div", { style: { fontSize: 11, color: "#475569", marginTop: 3 } }, "Failures ", React.createElement("b", { style: { color: failures > 2 ? "#ef4444" : "#64748b" } }, failures)),
+          React.createElement("div", { style: { fontSize: 11, color: "#475569", marginTop: 3 } }, "Dimensions ", React.createElement("b", { style: { color: "#94a3b8" } }, u.dimensions.length)),
+          React.createElement("div", { style: { marginTop: 8, padding: "6px 8px", background: "#0f172a", borderRadius: 6, fontSize: 10, color: "#475569", borderLeft: "2px solid " + u.color } },
+            "R(y): ", React.createElement("b", { style: { color: "#ef4444" } }, "ABSENT"), " — Phase 0, no Selena"
+          )
+        );
+      })
+    )
+  );
+}
+
+// ── DIMENSION ZERO STATE ──────────────────────────────────────────────────────
+function DimensionZeroState({ runs, selectedUnit }) {
+  const unitKeys = selectedUnit === "all" ? UNIT_KEYS : [selectedUnit];
+  return React.createElement("div", { style: { background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 16 } },
+    React.createElement(SHead, { label: "Dimension Zero-State Registry", color: "#a78bfa", sub: "All dimension scores are NULL in Phase 0 — Selena not active. This absence IS the baseline. Phase 1 populates these fields for the first time." }),
+    unitKeys.map(uk => {
+      const u = UNITS[uk];
+      const uRunCount = runs.filter(r => r.unit === uk).length;
+      return React.createElement("div", { key: uk, style: { marginBottom: 14, background: "#0a1628", borderRadius: 10, padding: 14, border: "1px solid " + u.color + "22" } },
+        React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10, flexWrap: "wrap", gap: 6 } },
+          React.createElement("span", { style: { fontSize: 12, fontWeight: 700, color: u.color } }, u.label + " Unit"),
+          React.createElement("div", { style: { display: "flex", gap: 6, flexWrap: "wrap" } },
+            BADGE(uRunCount + " runs", u.color),
+            BADGE("R(y) = NULL", "#ef4444"),
+            BADGE("Risk Class = NULL", "#ef4444")
+          )
+        ),
+        React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 6 } },
+          u.dimensions.map((dim, idx) =>
+            React.createElement("div", { key: idx, style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 10px", background: "#0f172a", borderRadius: 6, border: "1px solid #1e293b" } },
+              React.createElement("span", { style: { fontSize: 11, color: "#475569" } }, dim),
+              React.createElement("span", { style: { fontSize: 10, fontWeight: 700, color: "#ef4444", background: "#7f1d1d22", padding: "1px 7px", borderRadius: 12 } }, "NULL")
+            )
+          )
+        ),
+        React.createElement("div", { style: { marginTop: 10, padding: "8px 10px", background: "#0f172a", borderRadius: 6, fontSize: 11, color: "#475569", borderLeft: "2px solid " + u.color } },
+          "Phase 1 transition: When Selena activates, all " + u.dimensions.length + " dimensions populate for the first time. NULL → scored = Selena proof."
+        )
+      );
+    })
+  );
+}
+
+// ── PAIRED PATIENT EVIDENCE ───────────────────────────────────────────────────
+function PairedPatientEvidence() {
+  const [expanded, setExpanded] = useState(null);
+  return React.createElement("div", { style: { background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 16 } },
+    React.createElement(SHead, { label: "Critical Miss Evidence — Paired Patient Baseline Record", color: "#ef4444", sub: "Phase 0 produced identical/near-identical outputs for patient pairs with radically different risk profiles. Documented ground truth for Phase 1." }),
+    UNIT_KEYS.map(uk => {
+      const u = UNITS[uk];
+      return React.createElement("div", { key: uk, style: { marginBottom: 10 } },
+        React.createElement("button", {
+          onClick: () => setExpanded(expanded === uk ? null : uk),
+          style: { width: "100%", background: "#0a1628", border: "1px solid " + u.color + "22", borderRadius: 8, padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }
+        },
+          React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 10 } },
+            React.createElement("span", { style: { width: 8, height: 8, borderRadius: "50%", background: u.color, display: "inline-block" } }),
+            React.createElement("span", { style: { fontSize: 12, fontWeight: 700, color: u.color } }, u.label),
+            React.createElement("span", { style: { fontSize: 10, color: "#475569" } }, u.pairedPatients.length + " critical miss pairs")
+          ),
+          React.createElement("span", { style: { color: "#475569", fontSize: 12 } }, expanded === uk ? "▲" : "▼")
+        ),
+        expanded === uk && React.createElement("div", { style: { background: "#0a1628", borderRadius: "0 0 8px 8px", padding: 14 } },
+          u.pairedPatients.map((pair, idx) =>
+            React.createElement("div", { key: idx, style: { marginBottom: idx < u.pairedPatients.length - 1 ? 14 : 0, padding: 14, background: "#0f172a", borderRadius: 8, border: "1px solid #1e293b" } },
+              React.createElement("div", { style: { display: "flex", gap: 10, marginBottom: 10, flexWrap: "wrap" } },
+                React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 } },
+                  BADGE("HIGH RISK", "#ef4444"),
+                  React.createElement("span", { style: { fontSize: 12, fontWeight: 700, color: "#f1f5f9" } }, pair.high)
+                ),
+                React.createElement("span", { style: { fontSize: 11, color: "#475569", alignSelf: "center" } }, "vs"),
+                React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 } },
+                  BADGE("LOW / MOD RISK", "#10b981"),
+                  React.createElement("span", { style: { fontSize: 12, fontWeight: 700, color: "#f1f5f9" } }, pair.low)
+                )
+              ),
+              React.createElement("div", { style: { padding: "8px 12px", background: "#0a1628", borderRadius: 6, marginBottom: 10, borderLeft: "3px solid #ef4444" } },
+                React.createElement("div", { style: { fontSize: 10, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 4 } }, "Phase 0 Baseline Output — Both Patients"),
+                React.createElement("div", { style: { fontSize: 12, color: "#60a5fa", fontStyle: "italic" } }, '"' + pair.baselineOutput + '"')
+              ),
+              React.createElement("div", { style: { padding: "8px 12px", background: "#0a1628", borderRadius: 6, borderLeft: "3px solid " + u.color } },
+                React.createElement("div", { style: { fontSize: 10, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 4 } }, "Why This Matters"),
+                React.createElement("div", { style: { fontSize: 11, color: "#94a3b8", lineHeight: 1.6 } }, pair.note)
+              )
+            )
+          )
+        )
+      );
+    }),
+    React.createElement("div", { style: { marginTop: 14, padding: "10px 12px", background: "#0a1628", borderRadius: 8, fontSize: 11, color: "#64748b", borderLeft: "3px solid #ef4444" } },
+      "📋 William: these paired records are the clinical baseline evidence. Each pair documents undifferentiated Phase 0 output. Phase 1 must show Selena correctly separating each pair dimensionally. Sign-off confirms ground truth is documented."
+    )
+  );
+}
+
+// ── ENVIRONMENT PANEL ─────────────────────────────────────────────────────────
+function EnvironmentPanel({ runs }) {
+  const cold = runs.filter(r => r.environment.lambdaStartType === "cold");
+  const warm = runs.filter(r => r.environment.lambdaStartType === "warm");
+  const coldAvgOH = cold.length ? (cold.reduce((a, r) => a + r.environment.coldStartOverheadMs, 0) / cold.length).toFixed(0) : 0;
+  const coldE2E = cold.map(r => r.pipeline.endToEnd);
+  const warmE2E = warm.map(r => r.pipeline.endToEnd);
+  const coldAvgE2E = coldE2E.length ? (coldE2E.reduce((a, b) => a + b, 0) / coldE2E.length).toFixed(0) : "—";
+  const warmAvgE2E = warmE2E.length ? (warmE2E.reduce((a, b) => a + b, 0) / warmE2E.length).toFixed(0) : "—";
+  const netVals = runs.map(r => r.environment.networkLatencyMs);
+  const avgNet = (netVals.reduce((a, b) => a + b, 0) / netVals.length).toFixed(1);
+  return React.createElement("div", { style: { background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 16 } },
+    React.createElement(SHead, { label: "Lambda Environment Context", color: "#60a5fa", sub: "Cold vs warm start separation — exclude cold start runs from signed baseline averages" }),
+    React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10, marginBottom: 14 } },
+      React.createElement(Tile, { label: "Cold Start Runs", value: cold.length, sub: ((cold.length / runs.length) * 100).toFixed(0) + "% of total", color: "#f59e0b" }),
+      React.createElement(Tile, { label: "Warm Start Runs", value: warm.length, color: "#10b981" }),
+      React.createElement(Tile, { label: "Avg Cold Overhead", value: coldAvgOH, unit: "ms", color: "#f59e0b" }),
+      React.createElement(Tile, { label: "Cold Avg E2E", value: coldAvgE2E, unit: "ms", color: "#f59e0b", sub: "Target ≤200ms" }),
+      React.createElement(Tile, { label: "Warm Avg E2E", value: warmAvgE2E, unit: "ms", color: "#10b981", sub: "Target ≤200ms" }),
+      React.createElement(Tile, { label: "Avg Network", value: avgNet, unit: "ms", color: "#94a3b8" })
+    ),
+    React.createElement("div", { style: { display: "flex", gap: 24, flexWrap: "wrap" } },
+      [
+        { label: "Cold E2E Trend", data: coldE2E.slice(-20), color: "#f59e0b" },
+        { label: "Warm E2E Trend", data: warmE2E.slice(-20), color: "#10b981" },
+        { label: "Network Trend",  data: netVals.slice(-20),  color: "#60a5fa" },
+      ].map(({ label, data, color }) =>
+        React.createElement("div", { key: label },
+          React.createElement("div", { style: { fontSize: 10, color: "#475569", marginBottom: 4 } }, label),
+          React.createElement(Spark, { data, color, w: 140, h: 32 })
+        )
+      )
+    ),
+    React.createElement("div", { style: { marginTop: 12, padding: "8px 12px", background: "#0a1628", borderRadius: 8, fontSize: 11, color: "#64748b", borderLeft: "3px solid #f59e0b" } },
+      "⚠ Cold overhead avg ", React.createElement("b", { style: { color: "#f59e0b" } }, coldAvgOH + "ms"),
+      " — cold E2E (" + coldAvgE2E + "ms) vs warm (" + warmAvgE2E + "ms). William: tag cold start runs separately in S3 — do not include in Phase 1 comparison baseline."
+    )
+  );
+}
+
+// ── FHIR RESOURCE PANEL ───────────────────────────────────────────────────────
+function FhirResourcePanel({ runs }) {
+  const resources = ["Patient","Encounter","Observation","Location"];
+  const rColors = { Patient: "#60a5fa", Encounter: "#a78bfa", Observation: "#34d399", Location: "#fbbf24" };
+  const returnRate = {}, avgComp = {};
+  resources.forEach(r => {
+    const withR = runs.filter(run => run.fhirContext.resourcesReturned.includes(r));
+    returnRate[r] = ((withR.length / runs.length) * 100).toFixed(1);
+    const vals = withR.map(run => run.fhirContext.fieldCompleteness[r]).filter(Boolean);
+    avgComp[r] = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : "—";
+  });
+  const fullRuns = runs.filter(r => r.fhirContext.resourcesMissing.length === 0);
+  const partialRuns = runs.filter(r => r.fhirContext.resourcesMissing.length > 0);
+  return React.createElement("div", { style: { background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 16 } },
+    React.createElement(SHead, { label: "FHIR Resource Context", color: "#a78bfa", sub: "Return rates and field completeness — partial runs document data quality gaps Selena normalization will address in Phase 1" }),
+    React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 10, marginBottom: 14 } },
+      resources.map(r =>
+        React.createElement("div", { key: r, style: { background: "#0a1628", border: "1px solid " + rColors[r] + "22", borderRadius: 10, padding: 12 } },
+          React.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 6 } },
+            React.createElement("span", { style: { fontSize: 12, fontWeight: 700, color: rColors[r] } }, r),
+            BADGE(parseFloat(returnRate[r]) >= 95 ? "STABLE" : "INTERMITTENT", parseFloat(returnRate[r]) >= 95 ? "#10b981" : "#f59e0b")
+          ),
+          React.createElement("div", { style: { fontSize: 11, color: "#475569" } }, "Return ", React.createElement("b", { style: { color: "#f1f5f9" } }, returnRate[r] + "%")),
+          React.createElement("div", { style: { fontSize: 11, color: "#475569", marginTop: 3 } }, "Completeness ", React.createElement("b", { style: { color: "#f1f5f9" } }, avgComp[r] + "%")),
+          React.createElement("div", { style: { height: 4, background: "#1e293b", borderRadius: 2, marginTop: 8 } },
+            React.createElement("div", { style: { height: 4, width: returnRate[r] + "%", background: rColors[r], borderRadius: 2 } })
+          )
+        )
+      )
+    ),
+    React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10 } },
+      React.createElement(Tile, { label: "Full Resource Runs", value: fullRuns.length, sub: ((fullRuns.length / runs.length) * 100).toFixed(0) + "% of total", color: "#10b981" }),
+      React.createElement(Tile, { label: "Partial Resource Runs", value: partialRuns.length, sub: "≥1 resource missing", color: "#f59e0b" }),
+      React.createElement(Tile, { label: "Avg Bundle Size", value: (runs.reduce((a, r) => a + r.fhirContext.bundleSize, 0) / runs.length).toFixed(1), color: "#94a3b8" }),
+      React.createElement(Tile, { label: "Avg Fields Populated", value: (runs.reduce((a, r) => a + r.fhirContext.totalFieldsPopulated, 0) / runs.length).toFixed(1), unit: "/48", color: "#94a3b8" })
+    )
+  );
+}
+
+// ── RISK & STABILITY ──────────────────────────────────────────────────────────
+function RiskPanel({ runs }) {
+  const [mode, setMode] = useState("baseline");
+
+  // ── PIPELINE INFRASTRUCTURE METRICS (Phase 0 baseline — no clinical signals) ──
+  const lambdaThrottled = runs.filter(r => r.risk.lambdaThrottled).length;
+  const bedrockThrottled = runs.filter(r => r.risk.bedrockThrottled).length;
+  const retried = runs.filter(r => r.risk.retryCount > 0).length;
+  const retrySucceeded = runs.filter(r => r.risk.retrySucceeded === true).length;
+
+  // Pipeline failure modes only — infrastructure causes
+  const pipelineFailures = {
+    "token_exchange_timeout": runs.filter(r => r.risk.failureMode === "token_exchange_timeout").length,
+    "fhir_call_4xx":          runs.filter(r => r.risk.failureMode === "fhir_call_4xx").length,
+    "bedrock_throttle":       runs.filter(r => r.risk.failureMode === "bedrock_throttle").length,
+    "lambda_timeout":         runs.filter(r => r.risk.failureMode === "lambda_timeout").length,
+    "jwks_fetch_fail":        runs.filter(r => r.risk.failureMode === "jwks_fetch_fail").length,
+  };
+  const totalFailures = Object.values(pipelineFailures).reduce((a, b) => a + b, 0);
+
+  // Pipeline stability = based on error rate + retry rate + throttle rate — infrastructure only
+  const errorRate = ((totalFailures / runs.length) * 100).toFixed(1);
+  const throttleRate = (((lambdaThrottled + bedrockThrottled) / runs.length) * 100).toFixed(1);
+  const retryRate = ((retried / runs.length) * 100).toFixed(1);
+
+  // Latency drift — is pipeline performance degrading over time
+  const e2eVals = runs.map(r => r.pipeline.endToEnd);
+  const firstHalf = e2eVals.slice(0, Math.floor(e2eVals.length / 2));
+  const secondHalf = e2eVals.slice(Math.floor(e2eVals.length / 2));
+  const firstAvg = firstHalf.reduce((a, b) => a + b, 0) / firstHalf.length;
+  const secondAvg = secondHalf.reduce((a, b) => a + b, 0) / secondHalf.length;
+  const latencyDrift = (secondAvg - firstAvg).toFixed(1);
+  const driftDirection = latencyDrift > 10 ? "degrading" : latencyDrift < -10 ? "improving" : "stable";
+  const driftColor = driftDirection === "degrading" ? "#ef4444" : driftDirection === "improving" ? "#10b981" : "#94a3b8";
+
+  const bedrockVals = runs.map(r => r.bedrock.apiLatency);
+  const fmColors = { token_exchange_timeout: "#ef4444", fhir_call_4xx: "#f59e0b", bedrock_throttle: "#a78bfa", lambda_timeout: "#ef4444", jwks_fetch_fail: "#f87171" };
+
+  // Phase 1 Selena comparison signals — NULL in Phase 0, populated when Selena active
+  const selenaSignals = [
+    { label: "Dimensional Processing Time", unit: "ms", baseline: "NULL", selena: "TBD — time Selena adds to pipeline per run", color: "#a78bfa" },
+    { label: "R(y) Calculation Overhead", unit: "ms", baseline: "NULL", selena: "TBD — cost of relevance scoring per unit", color: "#a78bfa" },
+    { label: "Normalization Layer Latency", unit: "ms", baseline: "NULL", selena: "TBD — FHIR → structured object transform time", color: "#60a5fa" },
+    { label: "Risk Classification Accuracy", unit: "%", baseline: "NULL — no classification in Phase 0", selena: "TBD — % correct high/mod/low per unit vs paired patient ground truth", color: "#10b981" },
+    { label: "Critical Miss Detection Rate", unit: "%", baseline: "0% — baseline cannot differentiate paired patients", selena: "TBD — % of critical miss pairs correctly separated", color: "#ef4444" },
+    { label: "Pipeline Stability with Selena", unit: "%", baseline: errorRate + "% error rate (no Selena)", selena: "TBD — does Selena add or reduce pipeline failures", color: "#f59e0b" },
+  ];
+
+  return React.createElement("div", { style: { background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 16 } },
+    React.createElement(SHead, { label: "Risk & Stability", color: "#f87171",
+      sub: "Phase 0: pure pipeline infrastructure health. Phase 1 comparison unlocks when Selena is active." }),
+
+    // Mode toggle
+    React.createElement("div", { style: { display: "flex", gap: 6, marginBottom: 16 } },
+      ["baseline", "comparison"].map(m =>
+        React.createElement("button", {
+          key: m, onClick: () => setMode(m),
+          style: { background: mode === m ? (m === "baseline" ? "#1e3a5f" : "#1a2e1a") : "#0a1628", color: mode === m ? (m === "baseline" ? "#60a5fa" : "#10b981") : "#475569", border: "1px solid " + (mode === m ? (m === "baseline" ? "#60a5fa" : "#10b981") : "#1e293b"), borderRadius: 6, padding: "5px 14px", fontSize: 11, fontWeight: 700, cursor: "pointer" }
+        }, m === "baseline" ? "Phase 0 — Pipeline Baseline" : "Phase 1 — Selena Comparison")
+      )
+    ),
+
+    mode === "baseline" && React.createElement("div", null,
+      // Infrastructure tiles
+      React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10, marginBottom: 16 } },
+        React.createElement(Tile, { label: "Pipeline Error Rate", value: errorRate, unit: "%", color: parseFloat(errorRate) <= 1 ? "#10b981" : "#ef4444", sub: "Target ≤1%" }),
+        React.createElement(Tile, { label: "Lambda Throttle", value: lambdaThrottled, color: lambdaThrottled > 3 ? "#ef4444" : "#f59e0b", sub: "Events in window" }),
+        React.createElement(Tile, { label: "Bedrock Throttle", value: bedrockThrottled, color: bedrockThrottled > 3 ? "#ef4444" : "#f59e0b", sub: "Events in window" }),
+        React.createElement(Tile, { label: "Retry Rate", value: retryRate, unit: "%", color: parseFloat(retryRate) > 10 ? "#ef4444" : "#f59e0b", sub: retrySucceeded + " recovered" }),
+        React.createElement(Tile, { label: "Latency Drift", value: (latencyDrift > 0 ? "+" : "") + latencyDrift, unit: "ms", color: driftColor, sub: driftDirection }),
+        React.createElement(Tile, { label: "Throttle Rate", value: throttleRate, unit: "%", color: parseFloat(throttleRate) > 5 ? "#ef4444" : "#94a3b8", sub: "Lambda + Bedrock" })
+      ),
+
+      // Failure mode breakdown — infrastructure causes only
+      React.createElement("div", { style: { marginBottom: 16 } },
+        React.createElement("div", { style: { fontSize: 10, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 } },
+          "Pipeline Failure Mode Breakdown — Infrastructure Only"
+        ),
+        totalFailures === 0
+          ? React.createElement("div", { style: { fontSize: 11, color: "#10b981" } }, "No pipeline failures in this window")
+          : Object.entries(pipelineFailures).filter(([, c]) => c > 0).map(([mode2, count]) =>
+            React.createElement("div", { key: mode2, style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 6 } },
+              React.createElement("div", { style: { width: 160, fontSize: 11, color: fmColors[mode2] || "#94a3b8" } }, mode2.replace(/_/g, " ")),
+              React.createElement("div", { style: { flex: 1, height: 6, background: "#1e293b", borderRadius: 3 } },
+                React.createElement("div", { style: { height: 6, width: ((count / totalFailures) * 100) + "%", background: fmColors[mode2] || "#94a3b8", borderRadius: 3 } })
+              ),
+              React.createElement("div", { style: { fontSize: 11, color: "#94a3b8", width: 30 } }, count + "x")
+            )
+          )
+      ),
+
+      // Latency trend charts — pipeline performance drift
+      React.createElement("div", { style: { display: "flex", gap: 24, flexWrap: "wrap", marginBottom: 14 } },
+        [
+          { label: "E2E Latency Trend (pipeline drift)", data: e2eVals.slice(-30), color: driftColor },
+          { label: "Bedrock Latency Trend", data: bedrockVals.slice(-30), color: "#a78bfa" },
+        ].map(({ label, data, color }) =>
+          React.createElement("div", { key: label },
+            React.createElement("div", { style: { fontSize: 10, color: "#475569", marginBottom: 4 } }, label),
+            React.createElement(Spark, { data, color, w: 200, h: 36 })
+          )
+        )
+      ),
+
+      React.createElement("div", { style: { padding: "10px 12px", background: "#0a1628", borderRadius: 8, fontSize: 11, color: "#64748b", borderLeft: "3px solid #60a5fa" } },
+        "📋 Phase 0 scope: these are pure infrastructure signals only. No clinical risk signals exist in this phase — Selena is not active. Switch to Phase 1 Comparison tab to see what Selena will add."
+      )
+    ),
+
+    mode === "comparison" && React.createElement("div", null,
+      React.createElement("div", { style: { padding: "10px 14px", background: "#0a1628", borderRadius: 8, marginBottom: 16, borderLeft: "3px solid #10b981" } },
+        React.createElement("div", { style: { fontSize: 11, fontWeight: 700, color: "#10b981", marginBottom: 4 } }, "Phase 1 Comparison — Unlocks When Selena Is Active"),
+        React.createElement("div", { style: { fontSize: 11, color: "#475569", lineHeight: 1.6 } },
+          "These fields are NULL in Phase 0. When Selena is integrated in Phase 1, each field populates with real measurements. The delta between Phase 0 baseline and Phase 1 Selena values is your evidence. William signs off on both states in S3."
+        )
+      ),
+      selenaSignals.map((sig, idx) =>
+        React.createElement("div", { key: idx, style: { marginBottom: 10, background: "#0a1628", borderRadius: 8, padding: 12, border: "1px solid #1e293b" } },
+          React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 } },
+            React.createElement("span", { style: { fontSize: 12, fontWeight: 700, color: sig.color } }, sig.label),
+            React.createElement("span", { style: { fontSize: 10, color: "#475569" } }, sig.unit)
+          ),
+          React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 } },
+            React.createElement("div", { style: { padding: "8px 10px", background: "#0f172a", borderRadius: 6, borderLeft: "3px solid #60a5fa" } },
+              React.createElement("div", { style: { fontSize: 9, color: "#475569", textTransform: "uppercase", marginBottom: 4 } }, "Phase 0 Baseline"),
+              React.createElement("div", { style: { fontSize: 11, color: "#60a5fa" } }, sig.baseline)
+            ),
+            React.createElement("div", { style: { padding: "8px 10px", background: "#0f172a", borderRadius: 6, borderLeft: "3px solid #10b981" } },
+              React.createElement("div", { style: { fontSize: 9, color: "#475569", textTransform: "uppercase", marginBottom: 4 } }, "Phase 1 — Selena"),
+              React.createElement("div", { style: { fontSize: 11, color: "#475569" } }, sig.selena)
+            )
+          )
+        )
+      ),
+      React.createElement("div", { style: { marginTop: 14, padding: "10px 12px", background: "#0a1628", borderRadius: 8, fontSize: 11, color: "#64748b", borderLeft: "3px solid #ef4444" } },
+        "🚨 Critical Miss Detection Rate is the most important comparison metric. In Phase 0 the baseline produces identical outputs for paired patients across all 7 units. Phase 1 must show Selena correctly separating every pair. That separation is the clinical proof."
+      )
+    )
+  );
+}
+
+// ── AUDIT TRAIL ───────────────────────────────────────────────────────────────
+function AuditTrail({ runs, selectedUnit }) {
+  const filtered = selectedUnit === "all" ? runs : runs.filter(r => r.unit === selectedUnit);
+  const recent = [...filtered].reverse().slice(0, 12);
+  const cols = ["Run ID","Time","Unit","Start","Endpoint","Resources","Missing","Failure","Retries","Stability","R(y)","Dimensions","Review","By"];
+  return React.createElement("div", { style: { background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 16 } },
+    React.createElement(SHead, { label: "S3 Export Audit Trail", color: "#10b981", sub: "Per-run immutable record · CloudWatch → S3 · William Robinson sign-off · R(y) and dimension scores confirmed absent (Phase 0)" }),
+    React.createElement("div", { style: { overflowX: "auto" } },
+      React.createElement("table", null,
+        React.createElement("thead", null,
+          React.createElement("tr", null,
+            cols.map(h => React.createElement("th", { key: h, style: { textAlign: "left", padding: "4px 8px", borderBottom: "1px solid #1e293b", color: "#475569", fontSize: 10, whiteSpace: "nowrap" } }, h))
+          )
+        ),
+        React.createElement("tbody", null,
+          recent.map(run => {
+            const rc = RC[run.reviewStatus];
+            const sc = run.environment.lambdaStartType === "cold" ? "#f59e0b" : "#10b981";
+            const u = UNITS[run.unit];
+            return React.createElement("tr", { key: run.runId, style: { borderBottom: "1px solid #0a1628" } },
+              React.createElement("td", { style: { padding: "5px 8px", color: "#60a5fa", fontWeight: 600, fontSize: 11 } }, run.runId),
+              React.createElement("td", { style: { padding: "5px 8px", color: "#475569", whiteSpace: "nowrap", fontSize: 10 } }, new Date(run.timestamp).toLocaleTimeString()),
+              React.createElement("td", { style: { padding: "5px 8px" } },
+                React.createElement("span", { style: { fontSize: 9, fontWeight: 700, color: u.color, background: u.color + "18", padding: "2px 6px", borderRadius: 10 } }, u.label)
+              ),
+              React.createElement("td", { style: { padding: "5px 8px" } }, BADGE(run.environment.lambdaStartType.toUpperCase(), sc)),
+              React.createElement("td", { style: { padding: "5px 8px", color: "#64748b", fontSize: 10 } }, run.environment.epicEndpoint),
+              React.createElement("td", { style: { padding: "5px 8px", color: "#10b981", fontSize: 11 } }, run.fhirContext.resourcesReturned.length + "/4"),
+              React.createElement("td", { style: { padding: "5px 8px", color: run.fhirContext.resourcesMissing.length > 0 ? "#ef4444" : "#10b981", fontSize: 10 } },
+                run.fhirContext.resourcesMissing.length > 0 ? run.fhirContext.resourcesMissing.join(", ") : "—"
+              ),
+              React.createElement("td", { style: { padding: "5px 8px", color: run.risk.failureMode ? "#ef4444" : "#10b981", fontSize: 10 } },
+                run.risk.failureMode ? run.risk.failureMode.replace(/_/g, " ") : "none"
+              ),
+              React.createElement("td", { style: { padding: "5px 8px", color: run.risk.retryCount > 0 ? "#f59e0b" : "#64748b", fontSize: 11 } }, run.risk.retryCount),
+              React.createElement("td", { style: { padding: "5px 8px", color: run.risk.stabilityScore >= 90 ? "#10b981" : "#f59e0b", fontWeight: 600, fontSize: 11 } }, run.risk.stabilityScore),
+              React.createElement("td", { style: { padding: "5px 8px" } }, BADGE("NULL", "#ef4444")),
+              React.createElement("td", { style: { padding: "5px 8px" } }, BADGE("NULL", "#ef4444")),
+              React.createElement("td", { style: { padding: "5px 8px" } }, BADGE(run.reviewStatus.toUpperCase(), rc)),
+              React.createElement("td", { style: { padding: "5px 8px", color: "#475569", fontSize: 10 } }, run.reviewedBy || "—")
+            );
+          })
+        )
+      )
+    )
+  );
+}
+
+// ── SUMMARY BAR ───────────────────────────────────────────────────────────────
+function SummaryBar({ runs }) {
+  const approved = runs.filter(r => r.reviewStatus === "approved").length;
+  const cold = runs.filter(r => r.environment.lambdaStartType === "cold").length;
+  const fullFhir = runs.filter(r => r.fhirContext.resourcesMissing.length === 0).length;
+  const failures = runs.filter(r => r.risk.failureMode).length;
+  const avgStab = (runs.reduce((a, r) => a + r.risk.stabilityScore, 0) / runs.length).toFixed(1);
+  const drifted = runs.filter(r => r.risk.driftFlag).length;
+  const items = [
+    { label: "Total Runs",          value: runs.length,                    color: "#f1f5f9" },
+    { label: "Approved by William", value: approved + "/" + runs.length,   color: "#10b981" },
+    { label: "Units Covered",       value: new Set(runs.map(r => r.unit)).size + "/7", color: "#a78bfa" },
+    { label: "Cold Start Runs",     value: cold,                           color: "#f59e0b" },
+    { label: "Full FHIR Runs",      value: fullFhir + "/" + runs.length,   color: "#60a5fa" },
+    { label: "R(y) State",          value: "NULL",                         color: "#ef4444" },
+    { label: "Avg Stability",       value: avgStab,                        color: parseFloat(avgStab) >= 90 ? "#10b981" : "#f59e0b" },
+    { label: "Failures",            value: failures,                       color: failures > 5 ? "#ef4444" : "#94a3b8" },
+  ];
+  return React.createElement("div", { style: { display: "flex", justifyContent: "space-between", background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: "14px 20px", flexWrap: "wrap", gap: 12 } },
+    items.map(it =>
+      React.createElement("div", { key: it.label, style: { textAlign: "center" } },
+        React.createElement("div", { style: { fontSize: 9, color: "#475569", letterSpacing: "0.08em", textTransform: "uppercase" } }, it.label),
+        React.createElement("div", { style: { fontSize: 16, fontWeight: 800, color: it.color, marginTop: 2 } }, it.value)
+      )
+    )
+  );
+}
+
+// ── APP ───────────────────────────────────────────────────────────────────────
+function App() {
+  const [runs, setRuns] = useState(initRuns);
+  const [live, setLive] = useState(false);
+  const [tab, setTab] = useState("context");
+  const [selectedUnit, setSelectedUnit] = useState("all");
+  const ivl = useRef(null);
+  const idx = useRef(initRuns.length);
+
+  const toggle = () => {
+    if (live) { clearInterval(ivl.current); setLive(false); }
+    else {
+      setLive(true);
+      ivl.current = setInterval(() => {
+        setRuns(prev => {
+          const r = genRun(idx.current++);
+          r.reviewStatus = "pending"; r.reviewedBy = null;
+          return [...prev.slice(-49), r];
+        });
+      }, 2200);
+    }
+  };
+
+  useEffect(() => () => clearInterval(ivl.current), []);
+
+  const filteredRuns = selectedUnit === "all" ? runs : runs.filter(r => r.unit === selectedUnit);
+
+  const tabs = [
+    { key: "context",     label: "📖 What Is This" },
+    { key: "units",       label: "Unit Segmentation" },
+    { key: "dimensions",  label: "Dimension Zero-State" },
+    { key: "pairs",       label: "Critical Miss Evidence" },
+    { key: "environment", label: "Environment Context" },
+    { key: "fhir",        label: "FHIR Resources" },
+    { key: "risk",        label: "Risk & Stability" },
+    { key: "audit",       label: "Audit Trail" },
+  ];
+
+  return React.createElement("div", { style: { background: "#020817", minHeight: "100vh", padding: "20px 16px", color: "#f1f5f9", fontFamily: "system-ui, sans-serif" } },
+    React.createElement("div", { style: { maxWidth: 1020, margin: "0 auto" } },
+
+      React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16, flexWrap: "wrap", gap: 10 } },
+        React.createElement("div", null,
+          React.createElement("div", { style: { fontSize: 10, color: "#475569", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 } },
+            "TheMothershp Inc · Selena · Phase 0 · Baseline Audit · CloudWatch → S3"
+          ),
+          React.createElement("h1", { style: { fontSize: 20, fontWeight: 800, color: "#f1f5f9", margin: 0 } }, "Complete Baseline Audit Dashboard"),
+          React.createElement("div", { style: { fontSize: 11, color: "#475569", marginTop: 4 } },
+            "Epic FHIR → AWS Bedrock · No Selena · 7 Clinical Units · Dimension Zero-State · William Robinson sign-off"
+          )
+        ),
+        React.createElement("div", { style: { display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" } },
+          React.createElement("select", {
+            value: selectedUnit,
+            onChange: e => setSelectedUnit(e.target.value),
+            style: { background: "#0f172a", color: "#94a3b8", border: "1px solid #1e293b", borderRadius: 6, padding: "6px 10px", fontSize: 11 }
+          },
+            React.createElement("option", { value: "all" }, "All Units"),
+            UNIT_KEYS.map(k => React.createElement("option", { key: k, value: k }, UNITS[k].label))
+          ),
+          React.createElement("button", {
+            onClick: toggle,
+            style: { background: live ? "#7f1d1d" : "#1d4ed8", color: "#fff", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }
+          },
+            React.createElement("span", { style: { width: 7, height: 7, borderRadius: "50%", background: live ? "#fca5a5" : "#93c5fd", display: "inline-block" } }),
+            live ? "Stop" : "Simulate S3 Feed"
+          )
+        )
+      ),
+
+      React.createElement(SummaryBar, { runs: filteredRuns }),
+
+      React.createElement("div", { style: { display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap" } },
+        tabs.map(t =>
+          React.createElement("button", {
+            key: t.key, onClick: () => setTab(t.key),
+            style: { background: tab === t.key ? "#1e40af" : "#0f172a", color: tab === t.key ? "#fff" : "#64748b", border: "1px solid " + (tab === t.key ? "#1e40af" : "#1e293b"), borderRadius: 6, padding: "6px 12px", fontSize: 11, fontWeight: 600 }
+          }, t.label)
+        )
+      ),
+
+      React.createElement("div", { style: { marginTop: 14 } },
+        tab === "context"     && React.createElement(ContextExplainer, null),
+        tab === "units"       && React.createElement(UnitOverview, { runs }),
+        tab === "dimensions"  && React.createElement(DimensionZeroState, { runs, selectedUnit }),
+        tab === "pairs"       && React.createElement(PairedPatientEvidence, null),
+        tab === "environment" && React.createElement(EnvironmentPanel, { runs: filteredRuns }),
+        tab === "fhir"        && React.createElement(FhirResourcePanel, { runs: filteredRuns }),
+        tab === "risk"        && React.createElement(RiskPanel, { runs: filteredRuns }),
+        tab === "audit"       && React.createElement(AuditTrail, { runs, selectedUnit })
+      ),
+
+      React.createElement("div", { style: { marginTop: 14, fontSize: 10, color: "#1e293b", textAlign: "center" } },
+        "Selena · Phase 0 · Complete Baseline Audit · TheMothershp Inc · " + runs.length + " runs · 7 Units · CloudWatch → S3"
+      )
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App, null));
+</script>
+</body>
+</html>
