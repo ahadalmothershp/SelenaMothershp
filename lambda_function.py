@@ -1,4 +1,8 @@
 import json
+import logging
+
+log = logging.getLogger("selena.core")
+
 
 def parse_condition(condition):
     code = condition.get("code", {})
@@ -31,8 +35,9 @@ def parse_condition(condition):
         "subject_display": condition.get("subject", {}).get("display"),
         "encounter_display": condition.get("encounter", {}).get("display"),
         "encounter_identifier": condition.get("encounter", {}).get("identifier", {}).get("value"),
-        "recordedDate": condition.get("recordedDate")
+        "recordedDate": condition.get("recordedDate"),
     }
+
 
 def detect_clinical_unit(parsed_resource):
     """
@@ -41,16 +46,13 @@ def detect_clinical_unit(parsed_resource):
     """
     text_parts = []
 
-    # Main display
     if parsed_resource.get("display"):
         text_parts.append(parsed_resource["display"].lower())
 
-    # Categories
     for cat in parsed_resource.get("categories", []):
         if cat:
             text_parts.append(cat.lower())
 
-    # Coding displays
     for code_system in ["snomed", "icd9", "icd10"]:
         code_data = parsed_resource.get(code_system)
         if code_data and code_data.get("display"):
@@ -58,54 +60,40 @@ def detect_clinical_unit(parsed_resource):
 
     combined_text = " ".join(text_parts)
 
-    # --- Unit rules ---
-    # Mental Health
-    if any(keyword in combined_text for keyword in [
-        "depression", "anxiety", "suicidal", "mental", "psychiatric",
-        "bipolar", "schizophrenia", "self-harm", "mood disorder"
-    ]):
-        return "Mental Health"
+    unit_keywords = {
+        "Mental Health": [
+            "depression", "anxiety", "suicidal", "mental", "psychiatric",
+            "bipolar", "schizophrenia", "self-harm", "mood disorder",
+        ],
+        "ICU": [
+            "respiratory failure", "sepsis", "shock", "multi-organ", "ventilator",
+            "critical illness", "hemodynamic", "intensive care", "acute respiratory distress",
+        ],
+        "Cardiology": [
+            "heart failure", "myocardial infarction", "arrhythmia", "atrial fibrillation",
+            "angina", "coronary", "cardiac", "chest pain", "hypertension",
+        ],
+        "Emergency": [
+            "trauma", "emergency", "acute pain", "fall", "injury", "laceration",
+            "fracture", "ed visit", "urgent", "syncope",
+        ],
+        "Pulmonology": [
+            "copd", "asthma", "pneumonia", "bronchitis", "pulmonary", "hypoxia",
+        ],
+        "Neurology": [
+            "stroke", "seizure", "epilepsy", "migraine", "neurological", "tbi",
+        ],
+        "Oncology": [
+            "cancer", "malignant", "tumor", "neoplasm", "oncology", "metastatic",
+        ],
+    }
 
-    # ICU
-    if any(keyword in combined_text for keyword in [
-        "respiratory failure", "sepsis", "shock", "multi-organ", "ventilator",
-        "critical illness", "hemodynamic", "intensive care", "acute respiratory distress"
-    ]):
-        return "ICU"
-
-    # Cardiology
-    if any(keyword in combined_text for keyword in [
-        "heart failure", "myocardial infarction", "arrhythmia", "atrial fibrillation",
-        "angina", "coronary", "cardiac", "chest pain", "hypertension"
-    ]):
-        return "Cardiology"
-
-    # Emergency
-    if any(keyword in combined_text for keyword in [
-        "trauma", "emergency", "acute pain", "fall", "injury", "laceration",
-        "fracture", "ed visit", "urgent", "syncope"
-    ]):
-        return "Emergency"
-
-    # Pulmonology
-    if any(keyword in combined_text for keyword in [
-        "copd", "asthma", "pneumonia", "bronchitis", "pulmonary", "hypoxia"
-    ]):
-        return "Pulmonology"
-
-    # Neurology
-    if any(keyword in combined_text for keyword in [
-        "stroke", "seizure", "epilepsy", "migraine", "neurological", "tbi"
-    ]):
-        return "Neurology"
-
-    # Oncology
-    if any(keyword in combined_text for keyword in [
-        "cancer", "malignant", "tumor", "neoplasm", "oncology", "metastatic"
-    ]):
-        return "Oncology"
+    for unit, keywords in unit_keywords.items():
+        if any(kw in combined_text for kw in keywords):
+            return unit
 
     return "Unknown / General Medicine"
+
 
 def parse_resource(resource):
     resource_type = resource.get("resourceType")
@@ -119,32 +107,41 @@ def parse_resource(resource):
         "resourceType": resource_type,
         "id": resource.get("id"),
         "clinical_unit": "Unknown / Unsupported Resource",
-        "raw": resource
     }
 
-def response(status_code, body):
+
+def _response(status_code, body):
     return {
         "statusCode": status_code,
         "headers": {"Content-Type": "application/json"},
-        "body": json.dumps(body, indent=2)
+        "body": json.dumps(body),
     }
+
 
 def lambda_handler(event, context):
     try:
-        if event.get("resourceType"):
-            parsed = parse_resource(event)
-            return response(200, {
+        body = event
+        if isinstance(event.get("body"), str):
+            body = json.loads(event["body"])
+
+        if body.get("schemaVersion", "").startswith("phase0.syed") or body.get("fhirAggregate"):
+            from baseline_analyze_handler import lambda_handler as analyze_handler
+            return analyze_handler(event, context)
+
+        if body.get("resourceType"):
+            parsed = parse_resource(body)
+            return _response(200, {
                 "message": "FHIR data processed successfully",
                 "count": 1,
                 "data": [parsed],
-                "clinical_unit": parsed.get("clinical_unit")
+                "clinical_unit": parsed.get("clinical_unit"),
             })
 
-        return response(400, {
-            "error": "Invalid input"
-        })
+        return _response(400, {"error": "Invalid input"})
 
-    except Exception as e:
-        return response(500, {
-            "error": str(e)
-        })
+    except json.JSONDecodeError:
+        log.warning("Received non-JSON body")
+        return _response(400, {"error": "Request body must be valid JSON"})
+    except Exception:
+        log.exception("Unhandled error in lambda_handler")
+        return _response(500, {"error": "Internal server error"})
