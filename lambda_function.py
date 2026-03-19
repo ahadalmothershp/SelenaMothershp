@@ -1,7 +1,10 @@
 import json
 import logging
+import os
 
 log = logging.getLogger("selena.core")
+
+API_KEY = os.environ.get("API_KEY")
 
 
 def parse_condition(condition):
@@ -118,7 +121,25 @@ def _response(status_code, body):
     }
 
 
+def _check_api_key(event):
+    """Validate X-API-Key header from API Gateway events. Returns None if OK, or a 401 response."""
+    if not API_KEY:
+        return None
+
+    headers = event.get("headers") or {}
+    # API Gateway lowercases header names in HTTP API (v2)
+    key = headers.get("x-api-key") or headers.get("X-API-Key") or ""
+    if key != API_KEY:
+        log.warning("Rejected request — invalid or missing API key")
+        return _response(401, {"error": "Unauthorized"})
+    return None
+
+
 def lambda_handler(event, context):
+    auth_err = _check_api_key(event)
+    if auth_err:
+        return auth_err
+
     try:
         body = event
         if isinstance(event.get("body"), str):
