@@ -17,7 +17,7 @@ def parse_condition(condition):
         elif system == "http://hl7.org/fhir/sid/icd-10-cm":
             icd10 = {"code": c.get("code"), "display": c.get("display")}
 
-    categories = [cat.get("text") for cat in condition.get("category", [])]
+    categories = [cat.get("text") for cat in condition.get("category", []) if cat.get("text")]
 
     return {
         "resourceType": "Condition",
@@ -34,15 +34,91 @@ def parse_condition(condition):
         "recordedDate": condition.get("recordedDate")
     }
 
+def detect_clinical_unit(parsed_resource):
+    """
+    Determine which clinical unit the patient likely falls into
+    based on condition display, coding display, and category text.
+    """
+    text_parts = []
+
+    # Main display
+    if parsed_resource.get("display"):
+        text_parts.append(parsed_resource["display"].lower())
+
+    # Categories
+    for cat in parsed_resource.get("categories", []):
+        if cat:
+            text_parts.append(cat.lower())
+
+    # Coding displays
+    for code_system in ["snomed", "icd9", "icd10"]:
+        code_data = parsed_resource.get(code_system)
+        if code_data and code_data.get("display"):
+            text_parts.append(code_data["display"].lower())
+
+    combined_text = " ".join(text_parts)
+
+    # --- Unit rules ---
+    # Mental Health
+    if any(keyword in combined_text for keyword in [
+        "depression", "anxiety", "suicidal", "mental", "psychiatric",
+        "bipolar", "schizophrenia", "self-harm", "mood disorder"
+    ]):
+        return "Mental Health"
+
+    # ICU
+    if any(keyword in combined_text for keyword in [
+        "respiratory failure", "sepsis", "shock", "multi-organ", "ventilator",
+        "critical illness", "hemodynamic", "intensive care", "acute respiratory distress"
+    ]):
+        return "ICU"
+
+    # Cardiology
+    if any(keyword in combined_text for keyword in [
+        "heart failure", "myocardial infarction", "arrhythmia", "atrial fibrillation",
+        "angina", "coronary", "cardiac", "chest pain", "hypertension"
+    ]):
+        return "Cardiology"
+
+    # Emergency
+    if any(keyword in combined_text for keyword in [
+        "trauma", "emergency", "acute pain", "fall", "injury", "laceration",
+        "fracture", "ed visit", "urgent", "syncope"
+    ]):
+        return "Emergency"
+
+    # Pulmonology
+    if any(keyword in combined_text for keyword in [
+        "copd", "asthma", "pneumonia", "bronchitis", "pulmonary", "hypoxia"
+    ]):
+        return "Pulmonology"
+
+    # Neurology
+    if any(keyword in combined_text for keyword in [
+        "stroke", "seizure", "epilepsy", "migraine", "neurological", "tbi"
+    ]):
+        return "Neurology"
+
+    # Oncology
+    if any(keyword in combined_text for keyword in [
+        "cancer", "malignant", "tumor", "neoplasm", "oncology", "metastatic"
+    ]):
+        return "Oncology"
+
+    return "Unknown / General Medicine"
+
 def parse_resource(resource):
     resource_type = resource.get("resourceType")
 
     if resource_type == "Condition":
-        return parse_condition(resource)
+        parsed = parse_condition(resource)
+        parsed["clinical_unit"] = detect_clinical_unit(parsed)
+        return parsed
 
     return {
         "resourceType": resource_type,
         "id": resource.get("id"),
+        "clinical_unit": "Unknown / Unsupported Resource",
         "raw": resource
     }
 
@@ -60,7 +136,8 @@ def lambda_handler(event, context):
             return response(200, {
                 "message": "FHIR data processed successfully",
                 "count": 1,
-                "data": [parsed]
+                "data": [parsed],
+                "clinical_unit": parsed.get("clinical_unit")
             })
 
         return response(400, {
