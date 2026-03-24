@@ -27,6 +27,10 @@ bedrock = boto3.client(
 )
 
 
+# ---------------------------------------------------------------------------
+# Prompt & Bedrock
+# ---------------------------------------------------------------------------
+
 def _build_prompt(clinical_data, patient_id):
     return f"""You are a healthcare risk assessment assistant.
 
@@ -94,42 +98,66 @@ def _invoke_bedrock(clinical_data, patient_id):
     }
 
 
-def _extract_resources_from_reads(reads):
-    """Pull individual FHIR resources out of the fhirAggregate.reads object."""
+# ---------------------------------------------------------------------------
+# Resource extraction — supports both v3 (executionPayloads) and v1 (reads)
+# ---------------------------------------------------------------------------
+
+def _extract_resources_v3(fhir_agg):
+    """Extract resources from the v3 executionPayloads structure."""
+    payloads = fhir_agg.get("executionPayloads", {})
     resources = []
-    resource_types_requested = set()
-    resource_types_returned = set()
+
+    for label, payload in payloads.items():
+        for r in payload.get("resources", []):
+            if isinstance(r, dict) and r.get("resourceType"):
+                resources.append(r)
+
+    return resources
+
+
+def _extract_resources_v1(fhir_agg):
+    """Extract resources from the v1 reads structure (backward compat)."""
+    reads = fhir_agg.get("reads", {})
+    resources = []
 
     patient = reads.get("patient")
     if patient and isinstance(patient, dict) and patient.get("resourceType"):
         resources.append(patient)
-        resource_types_requested.add("Patient")
-        resource_types_returned.add("Patient")
 
-    search_keys = {
-        "encounterSearch": "Encounter",
-        "observationSearch": "Observation",
-        "diagnosticReportSearch": "DiagnosticReport",
-        "locationFollowUp": "Location",
-    }
-
-    for key, rt in search_keys.items():
+    for key in ["encounterSearch", "observationSearch", "diagnosticReportSearch",
+                "locationFollowUp", "conditionSearch", "procedureSearch",
+                "allergyIntoleranceSearch", "medicationRequestRead"]:
         section = reads.get(key, {})
-        resource_types_requested.add(rt)
-        items = section.get("resources", [])
-        if items:
-            resource_types_returned.add(rt)
-        for r in items:
+        for r in section.get("resources", []):
             if isinstance(r, dict):
                 resources.append(r)
 
-    return resources, resource_types_requested, resource_types_returned
+    return resources
 
+
+def _extract_resources(fhir_agg):
+    """Pick the right extraction method based on schema version."""
+    schema = fhir_agg.get("schemaVersion", "")
+
+    if fhir_agg.get("executionPayloads"):
+        return _extract_resources_v3(fhir_agg)
+    if fhir_agg.get("reads"):
+        return _extract_resources_v1(fhir_agg)
+
+    return []
+
+
+# ---------------------------------------------------------------------------
+# Parse all resources
+# ---------------------------------------------------------------------------
 
 def _parse_all_resources(resources):
-    """Run each resource through parse_resource; collect parsed clinical items."""
     return [parse_resource(r) for r in resources]
 
+
+# ---------------------------------------------------------------------------
+# API Gateway response helper
+# ---------------------------------------------------------------------------
 
 def _api_gw_response(status_code, body):
     return {
@@ -139,10 +167,11 @@ def _api_gw_response(status_code, body):
     }
 
 
-def lambda_handler(event, context):
-    """POST /baseline/analyze — accepts the other dev's fhirAggregate payload,
-    runs parse + Bedrock/Claude, returns the agreed response schema."""
+# ---------------------------------------------------------------------------
+# Lambda handler — POST /baseline/analyze
+# ---------------------------------------------------------------------------
 
+def lambda_handler(event, context):
     try:
         if isinstance(event.get("body"), str):
             body = json.loads(event["body"])
@@ -150,26 +179,18 @@ def lambda_handler(event, context):
             body = event
 
         fhir_agg = body.get("fhirAggregate", {})
-        reads = fhir_agg.get("reads", {})
         run_context = fhir_agg.get("runContext", {})
         patient_id = run_context.get("patientId", "unknown")
         run_id = body.get("runId", run_context.get("runId"))
 
         log.info("baseline/analyze start — runId=%s patientId=%s", run_id, patient_id)
 
-        resources, requested, returned = _extract_resources_from_reads(reads)
-        missing = requested - returned
-
-        clinical_items = _parse_all_resources(resources)
-        meaningful_items = [
-            item for item in clinical_items
-            if item.get("clinical_unit") != "Unknown / Unsupported Resource"
-        ]
+        resources = _extract_resources(fhir_agg)
+        parsed_items = _parse_all_resources(resources)
 
         log.info(
-            "Parsed %d resources, %d meaningful — requested=%s returned=%s missing=%s",
-            len(resources), len(meaningful_items),
-            sorted(requested), sorted(returned), sorted(missing),
+            "Extracted %d raw resources, parsed %d items",
+            len(resources), len(parsed_items),
         )
 
         baseline_output = None
@@ -181,9 +202,9 @@ def lambda_handler(event, context):
             "latencyMs": None,
         }
 
-        if meaningful_items:
+        if parsed_items:
             try:
-                result = _invoke_bedrock(meaningful_items, patient_id)
+                result = _invoke_bedrock(parsed_items, patient_id)
                 baseline_output = result["parsed"]
                 bedrock_info = {
                     "invoked": True,
@@ -194,40 +215,30 @@ def lambda_handler(event, context):
                 }
             except Exception:
                 log.exception("Bedrock invocation failed for patient=%s", patient_id)
-                baseline_output = {"error": "Risk assessment temporarily unavailable"}
+                baseline_output = "Risk assessment temporarily unavailable"
                 bedrock_info["invoked"] = True
                 bedrock_info["modelId"] = MODEL_ID
-        elif resources:
-            baseline_output = {
-                "risk_level": "normal",
-                "summary": "FHIR resources received but none produced structured clinical findings.",
-                "key_findings": [],
-                "risk_factors": [],
-                "recommendation": "Expand resource types to include Condition for richer analysis.",
-                "data_sufficiency": "limited",
-            }
+        else:
+            baseline_output = "No FHIR resources found in the payload"
 
         response_body = {
             "schemaVersion": "phase0.syed.response.v1",
             "baselineOutput": baseline_output,
             "bedrock": bedrock_info,
-            "fhirContextPatch": {
-                "patientId": patient_id,
-                "proofMode": "phase0-baseline",
-                "resourcesRequested": sorted(requested),
-                "resourcesReturned": sorted(returned),
-                "resourcesMissing": sorted(missing),
-            },
-            "model": {
-                "modelId": MODEL_ID if bedrock_info["invoked"] else None,
-                "version": MODEL_VERSION if bedrock_info["invoked"] else None,
-            },
         }
 
-        log.info("baseline/analyze complete — runId=%s risk=%s bedrock_invoked=%s",
-                 run_id,
-                 baseline_output.get("risk_level") if isinstance(baseline_output, dict) else None,
-                 bedrock_info["invoked"])
+        if bedrock_info["invoked"]:
+            response_body["model"] = {
+                "modelId": MODEL_ID,
+                "version": MODEL_VERSION,
+            }
+
+        log.info(
+            "baseline/analyze complete — runId=%s risk=%s bedrock_invoked=%s",
+            run_id,
+            baseline_output.get("risk_level") if isinstance(baseline_output, dict) else None,
+            bedrock_info["invoked"],
+        )
 
         return _api_gw_response(200, response_body)
 
@@ -244,6 +255,4 @@ def lambda_handler(event, context):
                 "outputTokens": None,
                 "latencyMs": None,
             },
-            "fhirContextPatch": None,
-            "model": {"modelId": None, "version": None},
         })
