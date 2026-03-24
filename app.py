@@ -80,6 +80,10 @@ def baseline_analyze():
         "body": json.dumps(body),
         "httpMethod": "POST",
         "path": "/baseline/analyze",
+        "headers": {
+            "x-api-key": request.headers.get("X-API-Key", ""),
+            "content-type": request.headers.get("Content-Type", ""),
+        },
     }
 
     log.info(
