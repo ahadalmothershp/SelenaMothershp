@@ -1,14 +1,40 @@
 import json
 import logging
 import os
+from typing import Any
 
 log = logging.getLogger("selena.core")
+log.setLevel(logging.INFO)
 
 API_KEY = os.environ.get("API_KEY")
 
+PHASE0_AI_SCHEMA = "phase0.ai.request.v1"
+PHASE0_FHIR_SCHEMA = "phase0.fhir.case.v1"
+
+REQUIRED_TOP_LEVEL_KEYS = {
+    "authContext",
+    "fhirAggregate",
+    "runId",
+    "runtimeContext",
+    "schemaVersion",
+    "timestamp",
+}
+
+REQUIRED_RESOURCE_FAMILIES = [
+    "allergies",
+    "conditions",
+    "diagnosticReports",
+    "encounters",
+    "locations",
+    "medicationRequests",
+    "patient",
+    "procedures",
+    "vitals",
+]
+
 
 # ---------------------------------------------------------------------------
-# FHIR Resource Parsers
+# FHIR Resource Parsers (legacy single-resource mode)
 # ---------------------------------------------------------------------------
 
 def parse_condition(resource):
@@ -207,7 +233,6 @@ def parse_allergy_intolerance(resource):
 
 def parse_location(resource):
     address = resource.get("address", {})
-    position = resource.get("position", {})
 
     return {
         "resourceType": "Location",
@@ -263,7 +288,7 @@ def _extract_dr_category(resource):
 
 
 # ---------------------------------------------------------------------------
-# Clinical Unit Detection (Condition-specific)
+# Clinical Unit Detection (legacy single Condition mode)
 # ---------------------------------------------------------------------------
 
 UNIT_KEYWORDS = {
@@ -315,7 +340,7 @@ def detect_clinical_unit(parsed_condition):
 
 
 # ---------------------------------------------------------------------------
-# Unified Resource Parser
+# Unified Resource Parser (legacy single-resource mode)
 # ---------------------------------------------------------------------------
 
 PARSERS = {
@@ -348,7 +373,7 @@ def parse_resource(resource):
 
 
 # ---------------------------------------------------------------------------
-# Lambda handler
+# Request Parsing / Validation
 # ---------------------------------------------------------------------------
 
 def _response(status_code, body):
@@ -370,17 +395,136 @@ def _check_api_key(event):
     return None
 
 
+def _extract_body(event: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(event, dict):
+        raise ValueError("Event must be a JSON object")
+
+    if "body" not in event:
+        return event
+
+    raw_body = event["body"]
+
+    if isinstance(raw_body, str):
+        return json.loads(raw_body)
+
+    if isinstance(raw_body, dict):
+        return raw_body
+
+    raise ValueError("Request body must be a JSON object or JSON string")
+
+
+def _is_phase0_ai_request(body: dict[str, Any]) -> bool:
+    if not isinstance(body, dict):
+        return False
+
+    if body.get("schemaVersion") != PHASE0_AI_SCHEMA:
+        return False
+
+    fhir_aggregate = body.get("fhirAggregate")
+    if not isinstance(fhir_aggregate, dict):
+        return False
+
+    return fhir_aggregate.get("schemaVersion") == PHASE0_FHIR_SCHEMA
+
+
+def _validate_phase0_ai_request(body: dict[str, Any]) -> list[str]:
+    errors = []
+
+    missing_top = REQUIRED_TOP_LEVEL_KEYS - set(body.keys())
+    if missing_top:
+        errors.append(f"Missing top-level keys: {sorted(missing_top)}")
+        return errors
+
+    if body.get("schemaVersion") != PHASE0_AI_SCHEMA:
+        errors.append(f"schemaVersion must be '{PHASE0_AI_SCHEMA}'")
+
+    fhir_aggregate = body.get("fhirAggregate")
+    if not isinstance(fhir_aggregate, dict):
+        errors.append("fhirAggregate must be an object")
+        return errors
+
+    if fhir_aggregate.get("schemaVersion") != PHASE0_FHIR_SCHEMA:
+        errors.append(f"fhirAggregate.schemaVersion must be '{PHASE0_FHIR_SCHEMA}'")
+
+    run_context = fhir_aggregate.get("runContext")
+    if not isinstance(run_context, dict):
+        errors.append("fhirAggregate.runContext must be an object")
+    else:
+        if body.get("runId") != run_context.get("runId"):
+            errors.append("runId must equal fhirAggregate.runContext.runId")
+
+    resource_summary = fhir_aggregate.get("resourceSummary")
+    if not isinstance(resource_summary, dict):
+        errors.append("fhirAggregate.resourceSummary must be an object")
+
+    resources = fhir_aggregate.get("resources")
+    if not isinstance(resources, dict):
+        errors.append("fhirAggregate.resources must be an object")
+        return errors
+
+    for family in REQUIRED_RESOURCE_FAMILIES:
+        if family not in resources:
+            errors.append(f"Missing resources.{family}")
+
+    if resource_summary:
+        for family in REQUIRED_RESOURCE_FAMILIES:
+            if family not in resource_summary:
+                errors.append(f"Missing resourceSummary.{family}")
+
+    patient_obj = resources.get("patient")
+    if patient_obj is not None and not isinstance(patient_obj, dict):
+        errors.append("resources.patient must be an object or null")
+
+    if resource_summary:
+        patient_count = resource_summary.get("patient")
+        if patient_count not in (0, 1):
+            errors.append("resourceSummary.patient must be 0 or 1")
+        else:
+            expected_patient_count = 0 if patient_obj is None else 1
+            if patient_count != expected_patient_count:
+                errors.append("resourceSummary.patient does not match resources.patient")
+
+    for family in REQUIRED_RESOURCE_FAMILIES:
+        if family == "patient":
+            continue
+
+        value = resources.get(family)
+        if not isinstance(value, list):
+            errors.append(f"resources.{family} must be a list")
+            continue
+
+        if resource_summary:
+            expected = resource_summary.get(family)
+            if isinstance(expected, int) and expected != len(value):
+                errors.append(
+                    f"resourceSummary.{family}={expected} does not match len(resources.{family})={len(value)}"
+                )
+
+    return errors
+
+
+# ---------------------------------------------------------------------------
+# Lambda handler
+# ---------------------------------------------------------------------------
+
 def lambda_handler(event, context):
     auth_err = _check_api_key(event)
     if auth_err:
         return auth_err
 
     try:
-        body = event
-        if isinstance(event.get("body"), str):
-            body = json.loads(event["body"])
+        body = _extract_body(event)
 
-        if body.get("schemaVersion", "").startswith("phase0.") or body.get("fhirAggregate"):
+        if _is_phase0_ai_request(body):
+            validation_errors = _validate_phase0_ai_request(body)
+            if validation_errors:
+                log.warning("Phase 0 request validation failed: %s", validation_errors)
+                return _response(400, {
+                    "error": "Invalid phase0.ai.request.v1 payload",
+                    "details": validation_errors,
+                })
+
+            log.info("Routing validated phase0.ai.request.v1 payload to baseline_analyze_handler")
             from baseline_analyze_handler import lambda_handler as analyze_handler
             return analyze_handler(event, context)
 
@@ -396,6 +540,9 @@ def lambda_handler(event, context):
     except json.JSONDecodeError:
         log.warning("Received non-JSON body")
         return _response(400, {"error": "Request body must be valid JSON"})
+    except ValueError as exc:
+        log.warning("Invalid request format: %s", exc)
+        return _response(400, {"error": str(exc)})
     except Exception:
         log.exception("Unhandled error in lambda_handler")
         return _response(500, {"error": "Internal server error"})
